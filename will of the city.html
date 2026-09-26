@@ -1,8 +1,22 @@
 <!DOCTYPE html>
+<!--
+  ==========================================================================
+  THE WILL OF THE CITY : SUBTERRANEAN INDEX TERMINAL (도시의 의지 : 검지 단말기)
+  CREATOR / ARCHITECT : 즈퐝
+  FIRST PUBLISHED     : 2026. 09.
+  LICENSE             : Creative Commons Attribution-NonCommercial-NoDerivatives 
+                        4.0 International (CC BY-NC-ND 4.0)
+  
+  * 본 저작물은 'Project Moon'의 세계관에 기반한 비영리 2차 창작물입니다.
+  * 원작자('즈퐝') 표기 필수 / 비영리 목적 한정 / 무단 재배포 및 2차 수정 금지
+  ==========================================================================
+-->
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="즈퐝">
+  <meta name="copyright" content="즈퐝 (CC BY-NC-ND 4.0)">
   <title>도시의 의지 : 검지 신탁 직수신 단말기 (The Will of the City)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,6 +97,7 @@
     }
     .telemetry-node span { color: #6a7480; }
     .telemetry-node strong { color: var(--cyan-phosphor); font-weight: 600; }
+    .creator-tag { color: var(--gold-seal) !important; }
 
     .audio-indicator {
       display: flex;
@@ -678,13 +693,18 @@
     footer.disclaimer {
       width: 100%;
       max-width: 800px;
-      padding: 20px 24px 40px;
-      font-size: 0.65rem;
-      line-height: 1.6;
-      color: #434c56;
+      padding: 24px 24px 44px;
+      font-size: 0.67rem;
+      line-height: 1.7;
+      color: #4a5460;
       text-align: center;
       border-top: 1px solid #141b22;
       z-index: 10;
+    }
+    .creator-credit {
+      margin-top: 6px;
+      color: #8b99a8;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -698,6 +718,7 @@
     <div class="telemetry-node">
       <span>관할 지구 // <strong id="node-id">경인 완충 외곽 Y-04</strong></span>
       <span>궤도 // <strong id="freq-id">순환 02-지표선</strong></span>
+      <span>설계 // <strong class="creator-tag">즈퐝</strong></span>
       <span>심부 맥동 // <strong id="axis-id">38.40Hz (공명)</strong></span>
     </div>
     <div class="audio-indicator" id="audio-toggle-btn" title="음향 켜기/끄기">
@@ -812,8 +833,10 @@
   </main>
 
   <footer class="disclaimer">
-    <p>본 사이트는 <strong>Project Moon</strong>의 세계관을 바탕으로 제작된 비공식 팬메이드(2차 창작) 인터랙티브 웹아트입니다.</p>
-    <p>원작 개발사와의 공식적인 제휴나 연관이 없으며, 비영리 목적으로 제작되었습니다.</p>
+    <p>본 사이트는 <strong>Project Moon</strong>의 세계관(Library of Ruina / Limbus Company)을 바탕으로 제작된 비공식 팬메이드(2차 창작) 인터랙티브 웹아트입니다.</p>
+    <div class="creator-credit">
+      Terminal Architecture & Sound Engine Designed by <strong>즈퐝</strong> (CC BY-NC-ND 4.0)
+    </div>
   </footer>
 
   <!-- First Contact Gate -->
@@ -842,6 +865,12 @@
   <div class="toast-pill" id="toast-pill">신탁 전문이 클립보드에 복사되었습니다.</div>
 
   <script>
+    /*
+      Console Attribution Stamp
+    */
+    console.log("%c[THE WILL OF THE CITY : SUBTERRANEAN INDEX TERMINAL]", "color: #4ee6d9; font-size: 14px; font-weight: bold;");
+    console.log("%cArchitect / Creator : 즈퐝 | License: CC BY-NC-ND 4.0", "color: #c9a456; font-size: 11px;");
+
     /* ============================================================
        UNNERVING COSMIC HORROR AMBIENCE ENGINE (THE CITY GOD)
        ============================================================ */
@@ -909,12 +938,11 @@
 
         const triOsc2 = this.ctx.createOscillator();
         triOsc2.type = 'sawtooth';
-        triOsc2.frequency.setValueAtTime(84.85, this.ctx.currentTime); // 증4도(Tritone) 음정
+        triOsc2.frequency.setValueAtTime(84.85, this.ctx.currentTime);
 
-        // LFO: 살아 숨 쉬듯 음정이 불규칙하게 흔들려 기괴함을 유발
         const triLfo = this.ctx.createOscillator();
         triLfo.type = 'sine';
-        triLfo.frequency.setValueAtTime(0.18, this.ctx.currentTime); // 5.5초 주기 미세 요동
+        triLfo.frequency.setValueAtTime(0.18, this.ctx.currentTime);
         const triLfoGain = this.ctx.createGain();
         triLfoGain.gain.setValueAtTime(2.2, this.ctx.currentTime);
         triLfo.connect(triLfoGain);
@@ -935,7 +963,7 @@
 
         const highWhine = this.ctx.createOscillator();
         highWhine.type = 'sine';
-        highWhine.frequency.setValueAtTime(4186, this.ctx.currentTime); // 귓가를 맴도는 C8 초고음
+        highWhine.frequency.setValueAtTime(4186, this.ctx.currentTime);
 
         const whineFilter = this.ctx.createBiquadFilter();
         whineFilter.type = 'bandpass';
@@ -973,7 +1001,6 @@
         return buffer;
       }
 
-      // Solenoid needle punch click (건조한 타자기 타격음)
       playTypeClick() {
         if (!this.initialized || this.isMuted) return;
         this.resume();
@@ -990,7 +1017,6 @@
         osc.stop(this.ctx.currentTime + 0.04);
       }
 
-      // Vault Drop & Tinnitus Ring (자아 양도 맹신 인장음 : 거대 금고 충격 + 3920Hz 이명)
       playStampSeal() {
         if (!this.initialized || this.isMuted) return;
         this.resume();
@@ -1020,7 +1046,6 @@
         ring.stop(t + 1.9);
       }
 
-      // Siren klaxon (지령 거부 적색 경보음)
       playAlertTone() {
         if (!this.initialized || this.isMuted) return;
         this.resume();
@@ -1037,7 +1062,6 @@
         osc.stop(this.ctx.currentTime + 0.48);
       }
 
-      // Execution step 1 : Rusty Latch & Heavy Iron Door
       playDoorOpen() {
         if (!this.initialized || this.isMuted) return;
         this.resume();
@@ -1078,7 +1102,6 @@
         creak.stop(t + 1.25);
       }
 
-      // Execution step 2 : Concrete Footfall
       playCorridorFootstep(volume = 0.25) {
         if (!this.initialized || this.isMuted) return;
         this.resume();
@@ -1112,7 +1135,6 @@
         noise.stop(t + 0.08);
       }
 
-      // Execution step 3 : Greatsword Concrete Grating
       playBladeConcreteScrape() {
         if (!this.initialized || this.isMuted) return;
         this.resume();
@@ -1155,7 +1177,6 @@
         metal.stop(t + dur);
       }
 
-      // Execution step 4 : Razor Severance Slash & Void
       playExecutionSlash() {
         if (!this.initialized || this.isMuted) return;
         this.resume();
@@ -1200,7 +1221,6 @@
         ring.stop(t + 2.6);
       }
 
-      // Cut everything abruptly into silence
       killAll() {
         if (this.masterGain) {
           this.masterGain.gain.setValueAtTime(0, this.ctx.currentTime);
@@ -1366,7 +1386,7 @@
       }
     });
 
-    // Action : Obey (자아 양도 : 信)
+    // Action : Obey
     btnObey.addEventListener('click', () => {
       if (isTyping) return;
       if (isRebellionActive) clearInterval(rebellionTimerInterval);
@@ -1408,7 +1428,7 @@
       showToast("단말기 재동조 : 새로운 신탁 공문이 직조되었습니다.");
     });
 
-    // Action : Defy (지령 거부)
+    // Action : Defy
     btnDefy.addEventListener('click', () => {
       if (isTyping || isRebellionActive) return;
 
@@ -1443,7 +1463,7 @@
       showToast("⚠ 지령 불이행 등록 : 대행자 추적이 개시되었습니다.");
     });
 
-    // 5초 스킵 버튼
+    // Skip Button
     btnSkipTimer.addEventListener('click', () => {
       if (!isRebellionActive || countdownSeconds <= 5) return;
       countdownSeconds = 5;
@@ -1459,7 +1479,7 @@
 
     // Execution Blackout Sequence
     function triggerExecutionBlackout() {
-      sound.killAll(); // Cut all sound abruptly into complete dead silence
+      sound.killAll();
       execOverlay.style.display = 'flex';
 
       setTimeout(() => {
@@ -1510,6 +1530,7 @@
       });
     });
 
+    // Auto Signature on Copy Text
     btnCopyDoc.addEventListener('click', () => {
       const data = PRESCRIPTS[currentPrescriptIndex];
       const serial = document.getElementById('meta-serial').textContent;
@@ -1525,7 +1546,8 @@ ${data.order}
 ${data.penalty}
 
 "도시의 뜻에 순응하십시오. 도시는 당신의 빈자리를 기억하지 않습니다."
-(검지 단말기 기록)`;
+──────────────
+📡 단말기 프로토콜 설계: 즈퐝 (CC BY-NC-ND 4.0)`;
 
       navigator.clipboard.writeText(text).then(() => {
         sound.playTypeClick();
