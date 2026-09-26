@@ -6,9 +6,6 @@
   FIRST PUBLISHED     : 2026. 09.
   LICENSE             : Creative Commons Attribution-NonCommercial-NoDerivatives 
                         4.0 International (CC BY-NC-ND 4.0)
-  
-  * 본 저작물은 'Project Moon'의 세계관에 기반한 비영리 2차 창작물입니다.
-  * 원작자('즈퐝') 표기 필수 / 비영리 목적 한정 / 무단 재배포 및 2차 수정 금지
   ==========================================================================
 -->
 <html lang="ko">
@@ -35,13 +32,7 @@
       --alert-crimson: #d32020;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     body {
       background-color: var(--bg-deep);
       color: #b0b8c0;
@@ -54,658 +45,232 @@
       position: relative;
     }
 
-    /* CRT Overlays */
     .crt-vignette {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none;
       background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.85) 95%);
-      box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
-      z-index: 100;
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.9); z-index: 100;
     }
-
     .crt-scanlines {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%),
                   linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-      background-size: 100% 4px, 6px 100%;
-      z-index: 99;
-      opacity: 0.85;
+      background-size: 100% 4px, 6px 100%; z-index: 99; opacity: 0.85;
     }
 
-    /* System Bar */
     header.system-bar {
-      width: 100%;
-      max-width: 900px;
-      padding: 18px 24px 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      border-bottom: 1px solid #1f272e;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      z-index: 10;
+      width: 100%; max-width: 900px; padding: 18px 24px 8px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      border-bottom: 1px solid #1f272e; font-size: 0.72rem; letter-spacing: 0.12em;
+      text-transform: uppercase; z-index: 10;
     }
-
-    .telemetry-node {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
+    .telemetry-node { display: flex; gap: 16px; flex-wrap: wrap; }
     .telemetry-node span { color: #6a7480; }
     .telemetry-node strong { color: var(--cyan-phosphor); font-weight: 600; }
     .creator-tag { color: var(--gold-seal) !important; }
 
-    .audio-indicator {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      color: #6a7480;
-      transition: color 0.2s;
-    }
-    .audio-indicator:hover { color: #ccd6e0; }
-    .audio-indicator.active { color: var(--cyan-phosphor); }
-    .audio-indicator .beacon {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background-color: currentColor;
-      box-shadow: 0 0 8px currentColor;
-    }
-
-    /* Seismic Rack */
     .seismic-rack {
-      width: 100%;
-      max-width: 900px;
-      height: 48px;
-      padding: 4px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.68rem;
-      color: #4a545e;
-      z-index: 10;
+      width: 100%; max-width: 900px; height: 48px; padding: 4px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.68rem; color: #4a545e; z-index: 10;
     }
-    .waveform-canvas {
-      flex: 1;
-      height: 28px;
-      margin: 0 16px;
-      opacity: 0.7;
-    }
+    .waveform-canvas { flex: 1; height: 28px; margin: 0 16px; opacity: 0.7; }
 
-    /* Main Deck */
     main.document-deck {
-      width: 100%;
-      max-width: 780px;
-      padding: 16px 20px 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      z-index: 10;
+      width: 100%; max-width: 780px; padding: 16px 20px 60px;
+      display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10;
     }
 
-    /* Prescript Sheet */
     .prescript-sheet {
-      width: 100%;
-      background-color: var(--paper-cream);
-      color: var(--ink-dark);
-      padding: 46px 44px 50px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9), 0 0 2px rgba(255, 255, 255, 0.1);
+      width: 100%; background-color: var(--paper-cream); color: var(--ink-dark);
+      padding: 46px 44px 50px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9), 0 0 2px rgba(255, 255, 255, 0.1);
       position: relative;
       background-image: 
         radial-gradient(var(--paper-burn) 0.75px, transparent 0.75px),
         linear-gradient(to bottom, rgba(200,180,150,0.15), rgba(150,130,100,0.25));
-      background-size: 20px 20px, 100% 100%;
-      min-height: 520px;
+      background-size: 20px 20px, 100% 100%; min-height: 480px;
     }
-
     .prescript-sheet::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 6px;
-      background: repeating-linear-gradient(90deg, #222 0px, #222 6px, transparent 6px, transparent 12px);
-      opacity: 0.35;
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+      background: repeating-linear-gradient(90deg, #222 0px, #222 6px, transparent 6px, transparent 12px); opacity: 0.35;
     }
-
     .sheet-watermark {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(-25deg);
-      font-family: 'Cinzel', serif;
-      font-size: 11rem;
-      font-weight: 900;
-      color: rgba(18, 20, 21, 0.04);
-      pointer-events: none;
-      letter-spacing: 0.1em;
-      white-space: nowrap;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-25deg);
+      font-family: 'Cinzel', serif; font-size: 11rem; font-weight: 900; color: rgba(18, 20, 21, 0.04);
+      pointer-events: none; letter-spacing: 0.1em; white-space: nowrap;
     }
 
     .sheet-header {
-      border-bottom: 2px solid var(--ink-dark);
-      padding-bottom: 16px;
-      margin-bottom: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
+      border-bottom: 2px solid var(--ink-dark); padding-bottom: 16px; margin-bottom: 24px;
+      display: flex; justify-content: space-between; align-items: flex-end;
     }
-
-    .sheet-title-group h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.15em;
-      color: var(--ink-dark);
-      margin-bottom: 2px;
-    }
-
-    .sheet-title-group p {
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      color: var(--ink-muted);
-      font-weight: 600;
-    }
-
-    .sheet-meta-block {
-      text-align: right;
-      font-size: 0.7rem;
-      line-height: 1.4;
-      color: var(--ink-muted);
-    }
+    .sheet-title-group h1 { font-family: 'Cinzel', serif; font-size: 1.6rem; letter-spacing: 0.15em; color: var(--ink-dark); }
+    .sheet-title-group p { font-size: 0.72rem; letter-spacing: 0.22em; color: var(--ink-muted); font-weight: 600; }
+    .sheet-meta-block { text-align: right; font-size: 0.7rem; line-height: 1.4; color: var(--ink-muted); }
     .sheet-meta-block strong { color: var(--ink-dark); }
 
     .relay-banner {
-      display: none;
-      background: #731212;
-      color: #fff;
-      font-size: 0.75rem;
-      padding: 6px 12px;
-      margin-bottom: 20px;
-      letter-spacing: 0.1em;
-      font-weight: 600;
-      border-left: 4px solid #1a0000;
+      display: none; background: #731212; color: #fff; font-size: 0.75rem;
+      padding: 6px 12px; margin-bottom: 20px; letter-spacing: 0.1em; font-weight: 600; border-left: 4px solid #1a0000;
     }
-
     .subject-credentials {
-      font-size: 0.8rem;
-      margin-bottom: 28px;
-      padding: 8px 12px;
-      background: rgba(0,0,0,0.04);
-      border: 1px dashed rgba(0,0,0,0.2);
-      display: flex;
-      justify-content: space-between;
+      font-size: 0.8rem; margin-bottom: 28px; padding: 8px 12px;
+      background: rgba(0,0,0,0.04); border: 1px dashed rgba(0,0,0,0.2); display: flex; justify-content: space-between;
     }
 
     .order-section { margin-bottom: 30px; }
-
     .order-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: var(--blood-red);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; color: var(--blood-red);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
     }
-    .order-label::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: rgba(158, 20, 20, 0.3);
-    }
-
+    .order-label::after { content: ""; flex: 1; height: 1px; background: rgba(158, 20, 20, 0.3); }
     .order-content-text {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.2rem;
-      line-height: 1.85;
-      font-weight: 600;
-      color: var(--ink-dark);
-      min-height: 68px;
-      word-break: keep-all;
+      font-family: 'Noto Serif KR', serif; font-size: 1.2rem; line-height: 1.85;
+      font-weight: 600; color: var(--ink-dark); min-height: 68px; word-break: keep-all;
     }
 
     .typewriter-cursor {
-      display: inline-block;
-      width: 9px;
-      height: 1.15em;
-      background-color: var(--ink-dark);
-      vertical-align: text-bottom;
-      margin-left: 4px;
-      animation: blink 0.8s infinite;
+      display: inline-block; width: 9px; height: 1.15em; background-color: var(--ink-dark);
+      vertical-align: text-bottom; margin-left: 4px; animation: blink 0.8s infinite;
     }
-
-    @keyframes blink {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
     .penalty-clause {
-      margin-top: 24px;
-      padding: 12px 16px;
-      border-left: 3px solid var(--blood-red);
-      background: rgba(158, 20, 20, 0.06);
-      font-size: 0.76rem;
-      line-height: 1.6;
-      color: #4a1c1c;
+      margin-top: 24px; padding: 12px 16px; border-left: 3px solid var(--blood-red);
+      background: rgba(158, 20, 20, 0.06); font-size: 0.76rem; line-height: 1.6; color: #4a1c1c;
     }
     .penalty-clause strong { color: var(--blood-red); }
 
-    .stamp-container {
-      position: absolute;
-      bottom: 60px;
-      right: 48px;
-      pointer-events: none;
-      z-index: 5;
-    }
-
+    .stamp-container { position: absolute; bottom: 24px; right: 36px; pointer-events: none !important; z-index: 5; }
     .seal-stamp {
-      width: 140px;
-      height: 140px;
-      border: 4px double var(--blood-red);
-      border-radius: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--blood-red);
-      transform: rotate(-18deg) scale(2.2);
-      opacity: 0;
-      transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      width: 130px; height: 130px; border: 4px double var(--blood-red); border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--blood-red); transform: rotate(-18deg) scale(2.2); opacity: 0;
+      pointer-events: none !important; transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       background: radial-gradient(circle, rgba(158,20,20,0.08), transparent 70%);
     }
+    .seal-stamp.imprinted { opacity: 0.88; transform: rotate(-15deg) scale(1); }
+    .seal-stamp .kanji { font-family: 'Noto Serif KR', serif; font-size: 3.2rem; font-weight: 900; line-height: 1; }
+    .seal-stamp .sub { font-size: 0.65rem; letter-spacing: 0.25em; font-weight: 700; margin-top: 2px; }
+    .seal-stamp.rebel { border-color: #2b0000; color: #520202; }
 
-    .seal-stamp.imprinted {
-      opacity: 0.88;
-      transform: rotate(-15deg) scale(1);
-    }
-    .seal-stamp .kanji {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 3.4rem;
-      font-weight: 900;
-      line-height: 1;
-    }
-    .seal-stamp .sub {
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      font-weight: 700;
-      margin-top: 2px;
-    }
-
-    .seal-stamp.rebel {
-      border-color: #2b0000;
-      color: #520202;
-    }
-
-    /* Causality Report */
     .causality-report-deck {
-      width: 100%;
-      margin-top: 14px;
-      background: #0d1117;
-      border: 1px solid #232b35;
-      padding: 22px 24px;
-      font-size: 0.78rem;
-      display: none;
-      animation: fadeIn 0.4s ease forwards;
+      width: 100%; margin-top: 14px; background: #0d1117; border: 1px solid #232b35;
+      padding: 22px 24px; font-size: 0.78rem; display: none; animation: fadeIn 0.4s ease forwards;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
     .report-title {
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      color: var(--cyan-phosphor);
-      border-bottom: 1px solid #1f2732;
-      padding-bottom: 8px;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: space-between;
+      font-size: 0.72rem; letter-spacing: 0.2em; color: var(--cyan-phosphor);
+      border-bottom: 1px solid #1f2732; padding-bottom: 8px; margin-bottom: 14px; display: flex; justify-content: space-between;
     }
-
-    .cascade-nodes {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .cascade-node-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      line-height: 1.5;
-    }
-
+    .cascade-nodes { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+    .cascade-node-row { display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
     .node-num {
-      color: var(--cyan-phosphor);
-      font-weight: 600;
-      font-size: 0.7rem;
-      background: rgba(78, 230, 217, 0.08);
-      padding: 2px 6px;
-      border: 1px solid rgba(78, 230, 217, 0.2);
+      color: var(--cyan-phosphor); font-weight: 600; font-size: 0.7rem; background: rgba(78, 230, 217, 0.08);
+      padding: 2px 6px; border: 1px solid rgba(78, 230, 217, 0.2);
     }
     .node-desc { color: #96a2af; flex: 1; }
-
     .audit-verdict {
-      padding: 10px 14px;
-      background: rgba(78, 230, 217, 0.04);
-      border-left: 2px solid var(--cyan-phosphor);
-      color: #cad3dc;
-      font-size: 0.76rem;
-      margin-bottom: 16px;
+      padding: 10px 14px; background: rgba(78, 230, 217, 0.04); border-left: 2px solid var(--cyan-phosphor);
+      color: #cad3dc; font-size: 0.76rem; margin-bottom: 16px;
     }
-
     .btn-reset-report {
-      width: 100%;
-      background: #151d26;
-      border: 1px solid #36485c;
-      color: var(--cyan-phosphor);
-      padding: 12px;
-      font-family: inherit;
-      font-size: 0.78rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
+      width: 100%; background: #151d26; border: 1px solid #36485c; color: var(--cyan-phosphor);
+      padding: 12px; font-family: inherit; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s;
     }
     .btn-reset-report:hover {
-      background: rgba(78, 230, 217, 0.15);
-      border-color: var(--cyan-phosphor);
-      box-shadow: 0 0 12px rgba(78, 230, 217, 0.25);
+      background: rgba(78, 230, 217, 0.15); border-color: var(--cyan-phosphor); box-shadow: 0 0 12px rgba(78, 230, 217, 0.25);
     }
 
-    /* Actions Deck */
-    .actions-deck {
-      width: 100%;
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .action-row {
-      display: flex;
-      gap: 12px;
-      width: 100%;
-    }
-
+    .actions-deck { width: 100%; margin-top: 24px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 20; }
+    .action-row { display: flex; gap: 12px; width: 100%; }
     .btn-terminal {
-      flex: 1;
-      background: #11161d;
-      border: 1px solid #283340;
-      color: #b5c2cf;
-      padding: 14px 18px;
-      font-family: inherit;
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.2s;
+      flex: 1; background: #11161d; border: 1px solid #283340; color: #b5c2cf;
+      padding: 14px 18px; font-family: inherit; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s;
+      position: relative; z-index: 25;
     }
+    .btn-terminal:hover:not(:disabled) { background: #19202a; border-color: #4a5c72; color: #fff; }
+    .btn-terminal:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn-terminal.primary { background: #121921; border-color: #3b5066; color: var(--cyan-phosphor); }
+    .btn-terminal.primary:hover:not(:disabled) { background: rgba(78, 230, 217, 0.12); border-color: var(--cyan-phosphor); box-shadow: 0 0 14px rgba(78, 230, 217, 0.25); }
+    .btn-terminal.danger { border-color: rgba(211, 32, 32, 0.4); color: #df6464; }
+    .btn-terminal.danger:hover:not(:disabled) { background: rgba(211, 32, 32, 0.15); border-color: var(--alert-crimson); color: #ff8585; box-shadow: 0 0 14px rgba(211, 32, 32, 0.25); }
+    .btn-terminal.relay { border-color: rgba(201, 164, 86, 0.4); color: var(--gold-seal); }
+    .btn-terminal.relay:hover:not(:disabled) { background: rgba(201, 164, 86, 0.12); border-color: var(--gold-seal); color: #ffe699; box-shadow: 0 0 14px rgba(201, 164, 86, 0.25); }
 
-    .btn-terminal:hover:not(:disabled) {
-      background: #19202a;
-      border-color: #4a5c72;
-      color: #fff;
-    }
-
-    .btn-terminal:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
-
-    .btn-terminal.primary {
-      background: #121921;
-      border-color: #3b5066;
-      color: var(--cyan-phosphor);
-    }
-    .btn-terminal.primary:hover:not(:disabled) {
-      background: rgba(78, 230, 217, 0.12);
-      border-color: var(--cyan-phosphor);
-      box-shadow: 0 0 14px rgba(78, 230, 217, 0.25);
-    }
-
-    .btn-terminal.danger {
-      border-color: rgba(211, 32, 32, 0.4);
-      color: #df6464;
-    }
-    .btn-terminal.danger:hover:not(:disabled) {
-      background: rgba(211, 32, 32, 0.15);
-      border-color: var(--alert-crimson);
-      color: #ff8585;
-      box-shadow: 0 0 14px rgba(211, 32, 32, 0.25);
-    }
-
-    .btn-terminal.relay {
-      border-color: rgba(201, 164, 86, 0.4);
-      color: var(--gold-seal);
-    }
-    .btn-terminal.relay:hover:not(:disabled) {
-      background: rgba(201, 164, 86, 0.12);
-      border-color: var(--gold-seal);
-      color: #ffe699;
-      box-shadow: 0 0 14px rgba(201, 164, 86, 0.25);
-    }
-
-    /* Red Alarm Status Panel */
     .rebellion-status-card {
-      display: none;
-      width: 100%;
-      background: #1f0808;
-      border: 1px solid var(--alert-crimson);
-      color: #ff9999;
-      padding: 18px 20px;
-      margin-top: 14px;
-      font-size: 0.78rem;
-      animation: alertPulse 1.8s infinite alternate;
+      display: none; width: 100%; background: #180505; border: 1px solid var(--alert-crimson);
+      color: #ff9999; padding: 18px 20px; margin-top: 14px; font-size: 0.78rem; animation: alertPulse 1.8s infinite alternate;
     }
-
     @keyframes alertPulse {
       0% { box-shadow: 0 0 8px rgba(211, 32, 32, 0.3); border-color: rgba(211,32,32,0.6); }
       100% { box-shadow: 0 0 24px rgba(211, 32, 32, 0.7); border-color: var(--alert-crimson); }
     }
-
     .rebellion-header {
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      color: #ff3333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-      gap: 10px;
+      font-weight: 700; letter-spacing: 0.15em; color: #ff3333; display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;
     }
-
-    .timer-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .timer-wrap { display: flex; align-items: center; gap: 12px; }
     .timer-readout {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #ff3838;
-      letter-spacing: 0.08em;
-      background: rgba(0,0,0,0.4);
-      padding: 2px 10px;
-      border: 1px solid #731212;
+      font-size: 1.3rem; font-weight: 700; color: #ff3838; letter-spacing: 0.08em;
+      background: rgba(0,0,0,0.4); padding: 2px 10px; border: 1px solid #731212;
     }
-
     .btn-skip-timer {
-      background: #3b0d0d;
-      border: 1px solid #ff4d4d;
-      color: #ffcccc;
-      padding: 6px 14px;
-      font-family: inherit;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.2s;
+      background: #3b0d0d; border: 1px solid #ff4d4d; color: #ffcccc; padding: 6px 14px;
+      font-family: inherit; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; border-radius: 2px;
     }
-    .btn-skip-timer:hover {
-      background: #731212;
-      color: #ffffff;
-      box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
-    }
+    .btn-skip-timer:hover { background: #731212; color: #ffffff; box-shadow: 0 0 10px rgba(255, 77, 77, 0.5); }
 
-    /* Toast */
     .toast-pill {
-      position: fixed;
-      bottom: 24px;
-      background: #141b22;
-      border: 1px solid var(--cyan-phosphor);
-      color: var(--cyan-phosphor);
-      padding: 8px 18px;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 1000;
+      position: fixed; bottom: 24px; background: #141b22; border: 1px solid var(--cyan-phosphor);
+      color: var(--cyan-phosphor); padding: 8px 18px; font-size: 0.75rem; letter-spacing: 0.1em; opacity: 0;
+      pointer-events: none; transition: opacity 0.3s ease; z-index: 1000;
     }
     .toast-pill.visible { opacity: 1; }
 
-    /* First Contact Gate */
     .first-contact-modal {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(4, 6, 8, 0.96);
-      z-index: 500;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      cursor: pointer;
-      text-align: center;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(4, 6, 8, 0.96);
+      z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 24px; cursor: pointer; text-align: center;
     }
-
     .contact-sigil {
-      font-family: 'Cinzel', serif;
-      font-size: 4rem;
-      color: var(--cyan-phosphor);
-      opacity: 0.8;
-      margin-bottom: 20px;
-      letter-spacing: 0.2em;
-      animation: sigilBreathe 3s infinite alternate ease-in-out;
+      font-family: 'Cinzel', serif; font-size: 4rem; color: var(--cyan-phosphor); opacity: 0.8;
+      margin-bottom: 20px; letter-spacing: 0.2em; animation: sigilBreathe 3s infinite alternate ease-in-out;
     }
-
     @keyframes sigilBreathe {
       0% { text-shadow: 0 0 10px rgba(78, 230, 217, 0.2); transform: scale(0.98); }
       100% { text-shadow: 0 0 35px rgba(78, 230, 217, 0.7); transform: scale(1.02); }
     }
-
-    .contact-title {
-      font-family: 'Cinzel', serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.25em;
-      color: #e1e7ec;
-      margin-bottom: 12px;
-    }
-
-    .contact-desc {
-      max-width: 480px;
-      font-size: 0.82rem;
-      line-height: 1.7;
-      color: #7b8896;
-      margin-bottom: 28px;
-    }
-
+    .contact-title { font-family: 'Cinzel', serif; font-size: 1.4rem; letter-spacing: 0.25em; color: #e1e7ec; margin-bottom: 12px; }
+    .contact-desc { max-width: 480px; font-size: 0.82rem; line-height: 1.7; color: #7b8896; margin-bottom: 28px; }
     .contact-prompt {
-      font-size: 0.78rem;
-      letter-spacing: 0.3em;
-      color: var(--cyan-phosphor);
-      border: 1px solid rgba(78, 230, 217, 0.35);
-      padding: 10px 24px;
-      background: rgba(78, 230, 217, 0.05);
+      font-size: 0.78rem; letter-spacing: 0.3em; color: var(--cyan-phosphor);
+      border: 1px solid rgba(78, 230, 217, 0.35); padding: 10px 24px; background: rgba(78, 230, 217, 0.05);
     }
 
-    /* Execution Overlay */
     .execution-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #000;
-      z-index: 2000;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
-      color: #fff;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000;
+      z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center;
+      padding: 30px; color: #fff;
     }
-
-    .execution-box {
-      max-width: 580px;
-      width: 100%;
-      border-left: 2px solid #5a0000;
-      padding-left: 24px;
-      font-family: 'Noto Serif KR', monospace;
-    }
-
-    .exec-tag {
-      font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.35em;
-      color: #7a1212;
-      margin-bottom: 16px;
-    }
-
-    .exec-line {
-      font-size: 1.05rem;
-      line-height: 2;
-      color: #dcdcdc;
-      margin-bottom: 12px;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: all 0.6s ease;
-    }
+    .execution-box { max-width: 580px; width: 100%; border-left: 2px solid #5a0000; padding-left: 24px; font-family: 'Noto Serif KR', monospace; }
+    .exec-tag { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.35em; color: #7a1212; margin-bottom: 16px; }
+    .exec-line { font-size: 1.05rem; line-height: 2; color: #dcdcdc; margin-bottom: 12px; opacity: 0; transform: translateY(6px); transition: all 0.6s ease; }
     .exec-line.visible { opacity: 1; transform: translateY(0); }
     .exec-line.crucial { color: #a81313; font-weight: 700; }
-
     .exec-restart-btn {
-      margin-top: 36px;
-      background: transparent;
-      border: 1px solid #444;
-      color: #888;
-      padding: 10px 22px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 1s ease;
+      margin-top: 36px; background: transparent; border: 1px solid #444; color: #888;
+      padding: 10px 22px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em;
+      cursor: pointer; opacity: 0; transition: opacity 1s ease;
     }
     .exec-restart-btn:hover { border-color: #888; color: #ddd; }
 
     footer.disclaimer {
-      width: 100%;
-      max-width: 800px;
-      padding: 24px 24px 44px;
-      font-size: 0.67rem;
-      line-height: 1.7;
-      color: #4a5460;
-      text-align: center;
-      border-top: 1px solid #141b22;
-      z-index: 10;
+      width: 100%; max-width: 800px; padding: 24px 24px 44px; font-size: 0.67rem;
+      line-height: 1.7; color: #4a5460; text-align: center; border-top: 1px solid #141b22; z-index: 10;
     }
-    .creator-credit {
-      margin-top: 6px;
-      color: #8b99a8;
-      font-weight: 600;
-    }
+    .creator-credit { margin-top: 6px; color: #8b99a8; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -713,33 +278,24 @@
   <div class="crt-vignette"></div>
   <div class="crt-scanlines"></div>
 
-  <!-- Header -->
   <header class="system-bar">
     <div class="telemetry-node">
-      <span>관할 지구 // <strong id="node-id">경인 완충 외곽 Y-04</strong></span>
-      <span>궤도 // <strong id="freq-id">순환 02-지표선</strong></span>
+      <span>관할 지구 // <strong>경인 완충 외곽 Y-04</strong></span>
+      <span>궤도 // <strong>순환 02-지표선</strong></span>
       <span>설계 // <strong class="creator-tag">즈퐝</strong></span>
-      <span>심부 맥동 // <strong id="axis-id">38.40Hz (공명)</strong></span>
-    </div>
-    <div class="audio-indicator" id="audio-toggle-btn" title="음향 켜기/끄기">
-      <div class="beacon"></div>
-      <span id="audio-status-text">AUDIO ACTIVE</span>
+      <span>심부 맥동 // <strong>38.40Hz (공명)</strong></span>
     </div>
   </header>
 
-  <!-- Seismic Pulse -->
   <div class="seismic-rack">
     <span>도시 심부 지하 진동 파형 (SEISMIC PULSE)</span>
     <canvas id="waveform-canvas" class="waveform-canvas" width="600" height="28"></canvas>
     <span id="depth-readout">-1,420M</span>
   </div>
 
-  <!-- Main Document Deck -->
   <main class="document-deck">
-
     <article class="prescript-sheet" id="prescript-sheet">
       <div class="sheet-watermark">INDEX</div>
-
       <div class="relay-banner" id="relay-banner">
         ⚠ 전령(MESSENGER)에 의해 양도된 신탁 : 누적 전가 1회차 (자아 유예 상태)
       </div>
@@ -762,9 +318,7 @@
       </div>
 
       <section class="order-section">
-        <div class="order-label">
-          <span>명령 조항 (THE MANDATE)</span>
-        </div>
+        <div class="order-label"><span>명령 조항 (THE MANDATE)</span></div>
         <div class="order-content-text" id="order-text"></div>
       </section>
 
@@ -781,80 +335,57 @@
       </div>
     </article>
 
-    <!-- Causality Report -->
     <section class="causality-report-deck" id="causality-report">
       <div class="report-title">
         <span>인과 연쇄 감사 보고서 (CAUSALITY AUDIT LOG)</span>
         <span id="audit-code">REF // C-8891-K</span>
       </div>
       <div class="cascade-nodes" id="cascade-nodes-container"></div>
-      <div class="audit-verdict" id="audit-verdict">
+      <div class="audit-verdict">
         결과 평가: 피지령자의 자아 포기로 인해 도시 전체 엔트로피의 균형이 안전 궤도에 머물렀습니다.
       </div>
-      <button class="btn-reset-report" id="btn-reset-report">
-        ↺ 새로운 신탁 수신 (단말기 초기화)
-      </button>
+      <button class="btn-reset-report" id="btn-reset-report">↺ 새로운 신탁 수신 (단말기 초기화)</button>
     </section>
 
-    <!-- Rebellion Card -->
     <div class="rebellion-status-card" id="rebellion-card">
       <div class="rebellion-header">
         <span>⚠ 지령 불이행 선고 접수 : 대행자 현장 급파 중</span>
         <div class="timer-wrap">
           <span class="timer-readout" id="rebellion-timer">05:00</span>
-          <button class="btn-skip-timer" id="btn-skip-timer">
-            ▶ 5초 후로 스킵
-          </button>
+          <button class="btn-skip-timer" id="btn-skip-timer">▶ 5초 후로 스킵</button>
         </div>
       </div>
       <p>당신의 독자적인 의지가 감지되었습니다. 도시의 궤도에서 이탈한 부품을 제거하기 위해 검지 대행자가 당신의 위치 좌표로 최단거리 진입 중입니다.</p>
     </div>
 
-    <!-- Actions Deck -->
     <div class="actions-deck">
       <div class="action-row">
-        <button class="btn-terminal primary" id="btn-obey">
-          <span>[ 1 ] 행동 이행 서약 (자아 양도 : 信)</span>
-        </button>
-        <button class="btn-terminal danger" id="btn-defy">
-          <span>[ 2 ] 지령 거부 (독자적 의지 주장)</span>
-        </button>
+        <button class="btn-terminal primary" id="btn-obey"><span>[ 1 ] 행동 이행 서약 (자아 양도 : 信)</span></button>
+        <button class="btn-terminal danger" id="btn-defy"><span>[ 2 ] 지령 거부 (독자적 의지 주장)</span></button>
       </div>
       <div class="action-row">
-        <button class="btn-terminal relay" id="btn-relay">
-          <span>[ 3 ] 지령 전가 (전령 파견 / 타인에게 양도)</span>
-        </button>
-        <button class="btn-terminal" id="btn-copy-doc">
-          <span>[ 4 ] 신탁 공문 전문 복사</span>
-        </button>
+        <button class="btn-terminal relay" id="btn-relay"><span>[ 3 ] 지령 전가 (전령 파견 / 타인에게 양도)</span></button>
+        <button class="btn-terminal" id="btn-copy-doc"><span>[ 4 ] 신탁 공문 전문 복사</span></button>
       </div>
     </div>
-
   </main>
 
   <footer class="disclaimer">
-    <p>본 사이트는 <strong>Project Moon</strong>의 세계관(Library of Ruina / Limbus Company)을 바탕으로 제작된 비공식 팬메이드(2차 창작) 인터랙티브 웹아트입니다.</p>
-    <div class="creator-credit">
-      Terminal Architecture & Sound Engine Designed by <strong>즈퐝</strong> (CC BY-NC-ND 4.0)
-    </div>
+    <p>본 사이트는 <strong>Project Moon</strong>의 세계관을 바탕으로 제작된 비공식 팬메이드 인터랙티브 웹아트입니다.</p>
+    <div class="creator-credit">Terminal Architecture & Sound Engine Designed by <strong>즈퐝</strong> (CC BY-NC-ND 4.0)</div>
   </footer>
 
-  <!-- First Contact Gate -->
   <div class="first-contact-modal" id="contact-modal">
     <div class="contact-sigil">INDEX</div>
     <div class="contact-title">자유의지 인계 및 단말기 동조</div>
-    <p class="contact-desc">
-      화면을 터치하거나 클릭하면 도시 지하 암반의 미세 진동수가 감지 장치와 동조되며,
-      당신을 위해 직조된 최초의 신탁 공문서가 활자 인쇄됩니다.
-    </p>
+    <p class="contact-desc">화면을 터치하거나 클릭하면 당신을 위해 직조된 최초의 신탁 공문서가 활자 인쇄됩니다.</p>
     <div class="contact-prompt">[ 화면을 클릭하여 도시의 의지에 접속 ]</div>
   </div>
 
-  <!-- Execution Blackout Overlay -->
   <div class="execution-overlay" id="exec-overlay">
     <div class="execution-box">
       <div class="exec-tag">// EXECUTION COMPLETE //</div>
-      <div class="exec-line" id="ex-line-1">검지 대행자(Proxy) 현장 당도 확인.</div>
+      <div class="exec-line" id="ex-line-1">검지 대행자(Proxy) 복도 진입 확인.</div>
       <div class="exec-line" id="ex-line-2">처형 규정 집행 : 대상자의 양쪽 안구 및 우측 완관절 압류 완료.</div>
       <div class="exec-line" id="ex-line-3">회수된 생체 조직은 7구역 섬유 방직기의 무게추로 재활용 조치됩니다.</div>
       <div class="exec-line crucial" id="ex-line-4">"도시는 당신의 빈자리를 기억하지 않습니다."</div>
@@ -865,374 +396,22 @@
   <div class="toast-pill" id="toast-pill">신탁 전문이 클립보드에 복사되었습니다.</div>
 
   <script>
-    /*
-      Console Attribution Stamp
-    */
-    console.log("%c[THE WILL OF THE CITY : SUBTERRANEAN INDEX TERMINAL]", "color: #4ee6d9; font-size: 14px; font-weight: bold;");
-    console.log("%cArchitect / Creator : 즈퐝 | License: CC BY-NC-ND 4.0", "color: #c9a456; font-size: 11px;");
-
     /* ============================================================
-       UNNERVING COSMIC HORROR AMBIENCE ENGINE (THE CITY GOD)
+       내 저장소 내부의 실제 오디오 파일 연결 (CORS 차단 없음)
        ============================================================ */
-    class CityAudioEngine {
-      constructor() {
-        this.ctx = null;
-        this.isMuted = false;
-        this.masterGain = null;
-        this.droneGain = null;
-        this.tritoneGain = null;
-        this.crackleGain = null;
-        this.initialized = false;
-      }
+    const foley = {
+      step: new Audio("step.mp3"),
+      scrape: new Audio("scrape.mp3"),
+      door: new Audio("door.mp3"),
+      slash: new Audio("slash.mp3")
+    };
 
-      init() {
-        if (this.initialized) return;
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        this.ctx = new AudioContext();
-
-        this.masterGain = this.ctx.createGain();
-        this.masterGain.gain.setValueAtTime(1.0, this.ctx.currentTime);
-        this.masterGain.connect(this.ctx.destination);
-
-        /* 1. 도시 심부 초저주파 맥동 (Infrasound Sub-Bass: 38.4Hz + 41.2Hz) */
-        this.droneGain = this.ctx.createGain();
-        this.droneGain.gain.setValueAtTime(0.12, this.ctx.currentTime);
-
-        const subFilter = this.ctx.createBiquadFilter();
-        subFilter.type = 'lowpass';
-        subFilter.frequency.setValueAtTime(95, this.ctx.currentTime);
-
-        const subOsc1 = this.ctx.createOscillator();
-        subOsc1.type = 'sine';
-        subOsc1.frequency.setValueAtTime(38.4, this.ctx.currentTime);
-
-        const subOsc2 = this.ctx.createOscillator();
-        subOsc2.type = 'sawtooth';
-        subOsc2.frequency.setValueAtTime(41.2, this.ctx.currentTime);
-
-        const subOsc2Gain = this.ctx.createGain();
-        subOsc2Gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
-        subOsc2.connect(subOsc2Gain);
-
-        subOsc1.connect(subFilter);
-        subOsc2Gain.connect(subFilter);
-        subFilter.connect(this.droneGain);
-        this.droneGain.connect(this.masterGain);
-
-        subOsc1.start();
-        subOsc2.start();
-
-        /* 2. 악마의 음정 불협화음 삼화음 드론 (Tritone Discordance)
-              60Hz 저음과 그와 불협을 이루는 84.85Hz(증4도) + LFO 미세 피치 요동 */
-        this.tritoneGain = this.ctx.createGain();
-        this.tritoneGain.gain.setValueAtTime(0.035, this.ctx.currentTime);
-
-        const triFilter = this.ctx.createBiquadFilter();
-        triFilter.type = 'bandpass';
-        triFilter.frequency.setValueAtTime(140, this.ctx.currentTime);
-        triFilter.Q.setValueAtTime(3.0, this.ctx.currentTime);
-
-        const triOsc1 = this.ctx.createOscillator();
-        triOsc1.type = 'triangle';
-        triOsc1.frequency.setValueAtTime(59.5, this.ctx.currentTime);
-
-        const triOsc2 = this.ctx.createOscillator();
-        triOsc2.type = 'sawtooth';
-        triOsc2.frequency.setValueAtTime(84.85, this.ctx.currentTime);
-
-        const triLfo = this.ctx.createOscillator();
-        triLfo.type = 'sine';
-        triLfo.frequency.setValueAtTime(0.18, this.ctx.currentTime);
-        const triLfoGain = this.ctx.createGain();
-        triLfoGain.gain.setValueAtTime(2.2, this.ctx.currentTime);
-        triLfo.connect(triLfoGain);
-        triLfoGain.connect(triOsc2.frequency);
-        triLfo.start();
-
-        triOsc1.connect(triFilter);
-        triOsc2.connect(triFilter);
-        triFilter.connect(this.tritoneGain);
-        this.tritoneGain.connect(this.masterGain);
-
-        triOsc1.start();
-        triOsc2.start();
-
-        /* 3. 뇌를 건드리는 고주파 전파음 & 불규칙 노이즈 (High Coil Whine & Static Crackle) */
-        this.crackleGain = this.ctx.createGain();
-        this.crackleGain.gain.setValueAtTime(0.015, this.ctx.currentTime);
-
-        const highWhine = this.ctx.createOscillator();
-        highWhine.type = 'sine';
-        highWhine.frequency.setValueAtTime(4186, this.ctx.currentTime);
-
-        const whineFilter = this.ctx.createBiquadFilter();
-        whineFilter.type = 'bandpass';
-        whineFilter.frequency.setValueAtTime(4186, this.ctx.currentTime);
-        whineFilter.Q.setValueAtTime(12.0, this.ctx.currentTime);
-
-        highWhine.connect(whineFilter);
-        whineFilter.connect(this.crackleGain);
-        this.crackleGain.connect(this.masterGain);
-
-        highWhine.start();
-
-        this.initialized = true;
-      }
-
-      resume() {
-        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
-      }
-
-      toggleMute() {
-        this.isMuted = !this.isMuted;
-        if (this.masterGain) {
-          this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
-        }
-        return this.isMuted;
-      }
-
-      createNoiseBuffer(seconds = 0.5) {
-        const bufferSize = this.ctx.sampleRate * seconds;
-        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-        const output = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = Math.random() * 2 - 1;
-        }
-        return buffer;
-      }
-
-      playTypeClick() {
-        if (!this.initialized || this.isMuted) return;
-        this.resume();
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(650 + Math.random() * 350, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.03);
-        gain.gain.setValueAtTime(0.09, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.035);
-        osc.connect(gain);
-        gain.connect(this.masterGain);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.04);
-      }
-
-      playStampSeal() {
-        if (!this.initialized || this.isMuted) return;
-        this.resume();
-        const t = this.ctx.currentTime;
-
-        const sub = this.ctx.createOscillator();
-        const subGain = this.ctx.createGain();
-        sub.type = 'sine';
-        sub.frequency.setValueAtTime(120, t);
-        sub.frequency.exponentialRampToValueAtTime(20, t + 0.38);
-        subGain.gain.setValueAtTime(0.45, t);
-        subGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
-        sub.connect(subGain);
-        subGain.connect(this.masterGain);
-        sub.start(t);
-        sub.stop(t + 0.45);
-
-        const ring = this.ctx.createOscillator();
-        const ringGain = this.ctx.createGain();
-        ring.type = 'sine';
-        ring.frequency.setValueAtTime(3920, t);
-        ringGain.gain.setValueAtTime(0.06, t);
-        ringGain.gain.exponentialRampToValueAtTime(0.00001, t + 1.8);
-        ring.connect(ringGain);
-        ringGain.connect(this.masterGain);
-        ring.start(t);
-        ring.stop(t + 1.9);
-      }
-
-      playAlertTone() {
-        if (!this.initialized || this.isMuted) return;
-        this.resume();
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(320, this.ctx.currentTime);
-        osc.frequency.linearRampToValueAtTime(240, this.ctx.currentTime + 0.4);
-        gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.005, this.ctx.currentTime + 0.45);
-        osc.connect(gain);
-        gain.connect(this.masterGain);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.48);
-      }
-
-      playDoorOpen() {
-        if (!this.initialized || this.isMuted) return;
-        this.resume();
-        const t = this.ctx.currentTime;
-
-        const clank = this.ctx.createOscillator();
-        const clankGain = this.ctx.createGain();
-        clank.type = 'sine';
-        clank.frequency.setValueAtTime(140, t);
-        clank.frequency.exponentialRampToValueAtTime(30, t + 0.14);
-        clankGain.gain.setValueAtTime(0.35, t);
-        clankGain.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
-        clank.connect(clankGain);
-        clankGain.connect(this.masterGain);
-        clank.start(t);
-        clank.stop(t + 0.18);
-
-        const creak = this.ctx.createOscillator();
-        const creakGain = this.ctx.createGain();
-        creak.type = 'sawtooth';
-        creak.frequency.setValueAtTime(170, t + 0.05);
-        creak.frequency.linearRampToValueAtTime(280, t + 0.45);
-        creak.frequency.exponentialRampToValueAtTime(100, t + 1.1);
-
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.setValueAtTime(420, t);
-        filter.Q.setValueAtTime(4.5, t);
-
-        creakGain.gain.setValueAtTime(0.001, t);
-        creakGain.gain.linearRampToValueAtTime(0.14, t + 0.2);
-        creakGain.gain.exponentialRampToValueAtTime(0.0001, t + 1.2);
-
-        creak.connect(filter);
-        filter.connect(creakGain);
-        creakGain.connect(this.masterGain);
-        creak.start(t + 0.05);
-        creak.stop(t + 1.25);
-      }
-
-      playCorridorFootstep(volume = 0.25) {
-        if (!this.initialized || this.isMuted) return;
-        this.resume();
-        const t = this.ctx.currentTime;
-
-        const sub = this.ctx.createOscillator();
-        const subGain = this.ctx.createGain();
-        sub.type = 'sine';
-        sub.frequency.setValueAtTime(90, t);
-        sub.frequency.exponentialRampToValueAtTime(26, t + 0.18);
-        subGain.gain.setValueAtTime(volume * 1.3, t);
-        subGain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
-        sub.connect(subGain);
-        subGain.connect(this.masterGain);
-        sub.start(t);
-        sub.stop(t + 0.22);
-
-        const noise = this.ctx.createBufferSource();
-        noise.buffer = this.createNoiseBuffer(0.08);
-        const nFilter = this.ctx.createBiquadFilter();
-        nFilter.type = 'highpass';
-        nFilter.frequency.setValueAtTime(1300, t);
-        const nGain = this.ctx.createGain();
-        nGain.gain.setValueAtTime(volume * 0.4, t);
-        nGain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
-
-        noise.connect(nFilter);
-        nFilter.connect(nGain);
-        nGain.connect(this.masterGain);
-        noise.start(t);
-        noise.stop(t + 0.08);
-      }
-
-      playBladeConcreteScrape() {
-        if (!this.initialized || this.isMuted) return;
-        this.resume();
-        const t = this.ctx.currentTime;
-        const dur = 1.3;
-
-        const noise = this.ctx.createBufferSource();
-        noise.buffer = this.createNoiseBuffer(dur);
-
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.setValueAtTime(1750, t);
-        filter.frequency.linearRampToValueAtTime(900, t + dur);
-        filter.Q.setValueAtTime(6.0, t);
-
-        const gain = this.ctx.createGain();
-        gain.gain.setValueAtTime(0.001, t);
-        gain.gain.linearRampToValueAtTime(0.18, t + 0.2);
-        gain.gain.linearRampToValueAtTime(0.13, t + 0.9);
-        gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-
-        noise.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.masterGain);
-        noise.start(t);
-        noise.stop(t + dur + 0.05);
-
-        const metal = this.ctx.createOscillator();
-        const mGain = this.ctx.createGain();
-        metal.type = 'sawtooth';
-        metal.frequency.setValueAtTime(1260, t);
-        metal.frequency.linearRampToValueAtTime(800, t + dur);
-        mGain.gain.setValueAtTime(0.001, t);
-        mGain.gain.linearRampToValueAtTime(0.04, t + 0.3);
-        mGain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-
-        metal.connect(mGain);
-        mGain.connect(this.masterGain);
-        metal.start(t);
-        metal.stop(t + dur);
-      }
-
-      playExecutionSlash() {
-        if (!this.initialized || this.isMuted) return;
-        this.resume();
-        const t = this.ctx.currentTime;
-
-        const swoosh = this.ctx.createBufferSource();
-        swoosh.buffer = this.createNoiseBuffer(0.2);
-        const sFilter = this.ctx.createBiquadFilter();
-        sFilter.type = 'bandpass';
-        sFilter.frequency.setValueAtTime(3400, t);
-        sFilter.frequency.exponentialRampToValueAtTime(380, t + 0.18);
-        const sGain = this.ctx.createGain();
-        sGain.gain.setValueAtTime(0.45, t);
-        sGain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
-        swoosh.connect(sFilter);
-        sFilter.connect(sGain);
-        sGain.connect(this.masterGain);
-        swoosh.start(t);
-        swoosh.stop(t + 0.22);
-
-        const impact = this.ctx.createOscillator();
-        const iGain = this.ctx.createGain();
-        impact.type = 'sine';
-        impact.frequency.setValueAtTime(140, t + 0.04);
-        impact.frequency.exponentialRampToValueAtTime(18, t + 0.4);
-        iGain.gain.setValueAtTime(0.65, t + 0.04);
-        iGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
-        impact.connect(iGain);
-        iGain.connect(this.masterGain);
-        impact.start(t + 0.04);
-        impact.stop(t + 0.5);
-
-        const ring = this.ctx.createOscillator();
-        const rGain = this.ctx.createGain();
-        ring.type = 'sine';
-        ring.frequency.setValueAtTime(4200, t + 0.05);
-        rGain.gain.setValueAtTime(0.07, t + 0.05);
-        rGain.gain.exponentialRampToValueAtTime(0.00001, t + 2.5);
-        ring.connect(rGain);
-        rGain.connect(this.masterGain);
-        ring.start(t + 0.05);
-        ring.stop(t + 2.6);
-      }
-
-      killAll() {
-        if (this.masterGain) {
-          this.masterGain.gain.setValueAtTime(0, this.ctx.currentTime);
-        }
-      }
+    function playFoley(audioObj) {
+      if (!audioObj) return;
+      audioObj.currentTime = 0;
+      audioObj.play().catch(e => console.log("오디오 파일 대기 중: " + e));
     }
 
-    const sound = new CityAudioEngine();
-
-    /* ============================================================
-       DATA: AUTHENTIC INDEX-STYLE PRESCRIPTS
-       ============================================================ */
     const PRESCRIPTS = [
       {
         order: "오전 03시 17분이 도래하기 전, 세 번째로 손에 닿은 차가운 포장지를 찢지 아니하고 바닥의 어둠에 눕힐 것. 지나가는 자의 발끝이 그것을 스치기 전까지 그 자리에 침묵을 지킬 것.",
@@ -1276,11 +455,8 @@
       }
     ];
 
-    /* ============================================================
-       APPLICATION LOGIC & EVENT CONTROLLERS
-       ============================================================ */
     let currentPrescriptIndex = 0;
-    let isTyping = false;
+    let typeInterval = null;
     let rebellionTimerInterval = null;
     let countdownSeconds = 300;
     let isRebellionActive = false;
@@ -1301,8 +477,6 @@
     const rebellionTimerElem = document.getElementById('rebellion-timer');
     const btnSkipTimer = document.getElementById('btn-skip-timer');
     const contactModal = document.getElementById('contact-modal');
-    const audioToggleBtn = document.getElementById('audio-toggle-btn');
-    const audioStatusText = document.getElementById('audio-status-text');
     const toastPill = document.getElementById('toast-pill');
     const relayBanner = document.getElementById('relay-banner');
 
@@ -1315,58 +489,45 @@
     ];
     const execRestartBtn = document.getElementById('exec-restart-btn');
 
-    // Parse URL params for Relay
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderParam = urlParams.get('order');
-    const relayedCount = parseInt(urlParams.get('relayed') || '0', 10);
+    currentPrescriptIndex = Math.floor(Math.random() * PRESCRIPTS.length);
 
-    if (orderParam !== null && !isNaN(parseInt(orderParam, 10))) {
-      currentPrescriptIndex = Math.abs(parseInt(orderParam, 10)) % PRESCRIPTS.length;
-    } else {
-      currentPrescriptIndex = Math.floor(Math.random() * PRESCRIPTS.length);
-    }
-
-    if (relayedCount > 0) {
-      relayBanner.style.display = 'block';
-      relayBanner.textContent = `⚠ 전령(MESSENGER)에 의해 양도된 신탁 : 누적 전가 ${relayedCount}회차 (자아 유예 상태)`;
-    }
-
-    function typeOrder(text, onComplete) {
-      isTyping = true;
+    function typeOrder(text) {
+      if (typeInterval) clearInterval(typeInterval);
       orderTextElem.innerHTML = '';
       let idx = 0;
       const cursor = document.createElement('span');
       cursor.className = 'typewriter-cursor';
       orderTextElem.appendChild(cursor);
 
-      const interval = setInterval(() => {
+      typeInterval = setInterval(() => {
         if (idx < text.length) {
           cursor.insertAdjacentText('beforebegin', text[idx]);
-          sound.playTypeClick();
           idx++;
         } else {
-          clearInterval(interval);
+          clearInterval(typeInterval);
+          typeInterval = null;
           cursor.remove();
-          isTyping = false;
-          if (onComplete) onComplete();
         }
-      }, 38);
+      }, 30);
+    }
+
+    function finishTypingInstantly() {
+      if (typeInterval) { clearInterval(typeInterval); typeInterval = null; }
+      orderTextElem.textContent = PRESCRIPTS[currentPrescriptIndex].order;
     }
 
     function loadPrescript(index) {
       const data = PRESCRIPTS[index];
       penaltyTextElem.textContent = data.penalty;
       typeOrder(data.order);
-
-      document.getElementById('meta-serial').textContent = `IX-${Math.floor(1000 + Math.random() * 9000)}-${String.fromCharCode(65 + Math.floor(Math.random()*26))}`;
+      document.getElementById('meta-serial').textContent = `IX-${Math.floor(1000 + Math.random() * 9000)}-K`;
       const now = new Date();
       document.getElementById('meta-timestamp').textContent = now.toTimeString().split(' ')[0];
     }
 
-    // First Contact Gate
     contactModal.addEventListener('click', () => {
-      sound.init();
-      sound.resume();
+      // 오디오 잠금 해제
+      Object.values(foley).forEach(a => { a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {}); });
       contactModal.style.opacity = '0';
       contactModal.style.transition = 'opacity 0.6s ease';
       setTimeout(() => {
@@ -1375,23 +536,10 @@
       }, 600);
     });
 
-    audioToggleBtn.addEventListener('click', () => {
-      const isMuted = sound.toggleMute();
-      if (isMuted) {
-        audioToggleBtn.classList.remove('active');
-        audioStatusText.textContent = 'AUDIO MUTED';
-      } else {
-        audioToggleBtn.classList.add('active');
-        audioStatusText.textContent = 'AUDIO ACTIVE';
-      }
-    });
-
-    // Action : Obey
     btnObey.addEventListener('click', () => {
-      if (isTyping) return;
+      finishTypingInstantly();
       if (isRebellionActive) clearInterval(rebellionTimerInterval);
 
-      sound.playStampSeal();
       stampKanji.textContent = '信';
       stampSub.textContent = 'INDEX // 맹신';
       sealStamp.className = 'seal-stamp imprinted';
@@ -1414,27 +562,21 @@
       showToast("서약 각인 완료 : 도시의 엔트로피 평형이 보존되었습니다.");
     });
 
-    // Action : Reset
     btnResetReport.addEventListener('click', () => {
-      sound.playTypeClick();
       causalityReport.style.display = 'none';
       sealStamp.className = 'seal-stamp';
       btnObey.disabled = false;
       btnDefy.disabled = false;
       btnRelay.disabled = false;
-      
-      currentPrescriptIndex = (currentPrescriptIndex + 1) % PRESCRIPTS.length;
+      currentPrescriptIndex = Math.floor(Math.random() * PRESCRIPTS.length);
       loadPrescript(currentPrescriptIndex);
-      showToast("단말기 재동조 : 새로운 신탁 공문이 직조되었습니다.");
     });
 
-    // Action : Defy
     btnDefy.addEventListener('click', () => {
-      if (isTyping || isRebellionActive) return;
+      finishTypingInstantly();
+      if (isRebellionActive) return;
 
       isRebellionActive = true;
-      sound.playAlertTone();
-
       stampKanji.textContent = '叛';
       stampSub.textContent = 'REBEL // 불이행';
       sealStamp.className = 'seal-stamp rebel imprinted';
@@ -1450,25 +592,18 @@
       rebellionTimerInterval = setInterval(() => {
         countdownSeconds--;
         updateTimerDisplay();
-        if (countdownSeconds % 3 === 0) {
-          sound.playAlertTone();
-        }
-
         if (countdownSeconds <= 0) {
           clearInterval(rebellionTimerInterval);
           triggerExecutionBlackout();
         }
       }, 1000);
-
       showToast("⚠ 지령 불이행 등록 : 대행자 추적이 개시되었습니다.");
     });
 
-    // Skip Button
     btnSkipTimer.addEventListener('click', () => {
       if (!isRebellionActive || countdownSeconds <= 5) return;
       countdownSeconds = 5;
       updateTimerDisplay();
-      showToast("카운트다운을 5초 후로 스킵합니다.");
     });
 
     function updateTimerDisplay() {
@@ -1477,117 +612,66 @@
       rebellionTimerElem.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
-    // Execution Blackout Sequence
+    /* ============================================================
+       실제 녹음 오디오 순차 재생 시퀀스
+       [발자국] -> [대검 긁기] -> [문 열림] -> [참격]
+       ============================================================ */
     function triggerExecutionBlackout() {
-      sound.killAll();
       execOverlay.style.display = 'flex';
 
+      // 1. 군화 발소리 (2.0초)
       setTimeout(() => {
-        sound.playDoorOpen();
-      }, 800);
-
-      setTimeout(() => {
-        sound.playCorridorFootstep(0.2);
+        playFoley(foley.step);
         exLines[0].classList.add('visible');
       }, 2000);
 
+      // 2. 대검이 콘크리트 바닥을 끼기기긱 긁는 소리 (3.5초)
       setTimeout(() => {
-        sound.playCorridorFootstep(0.35);
-      }, 2700);
+        playFoley(foley.scrape);
+      }, 3500);
 
+      // 3. 육중한 문이 덜컹 끼익 열리는 소리 (5.2초)
       setTimeout(() => {
-        sound.playCorridorFootstep(0.5);
-      }, 3400);
-
-      setTimeout(() => {
-        sound.playBladeConcreteScrape();
+        playFoley(foley.door);
         exLines[1].classList.add('visible');
-      }, 4200);
+      }, 5200);
 
+      // 4. 대행자 심판 텍스트 (6.0초)
       setTimeout(() => {
         exLines[2].classList.add('visible');
-      }, 5600);
+      }, 6000);
 
+      // 5. 실제 도검 참격음 (6.9초)
       setTimeout(() => {
-        sound.playExecutionSlash();
+        playFoley(foley.slash);
         exLines[3].classList.add('visible');
         execRestartBtn.style.opacity = '1';
-      }, 7000);
+      }, 6900);
     }
 
-    execRestartBtn.addEventListener('click', () => {
-      window.location.reload();
-    });
-
-    btnRelay.addEventListener('click', () => {
-      const nextRelayedCount = relayedCount + 1;
-      const relayUrl = `${window.location.origin}${window.location.pathname}?order=${currentPrescriptIndex}&relayed=${nextRelayedCount}`;
-      navigator.clipboard.writeText(relayUrl).then(() => {
-        sound.playTypeClick();
-        showToast("전령 링크 복사 완료 : 타인에게 신탁의 멍에를 전가하십시오.");
-      }).catch(() => {
-        prompt("전가 링크 복사:", relayUrl);
-      });
-    });
-
-    // Auto Signature on Copy Text
-    btnCopyDoc.addEventListener('click', () => {
-      const data = PRESCRIPTS[currentPrescriptIndex];
-      const serial = document.getElementById('meta-serial').textContent;
-      const text = `[THE PRESCRIPT // 도시의 지령 고지서]
-수신 일련번호: ${serial}
-관할 지구: 경인 완충 외곽 Y-04
-피지령자: 미등록 거주민 (부품)
-
-[명령 조항]
-${data.order}
-
-[불이행 처형 규정]
-${data.penalty}
-
-"도시의 뜻에 순응하십시오. 도시는 당신의 빈자리를 기억하지 않습니다."
-──────────────
-📡 단말기 프로토콜 설계: 즈퐝 (CC BY-NC-ND 4.0)`;
-
-      navigator.clipboard.writeText(text).then(() => {
-        sound.playTypeClick();
-        showToast("신탁 공문 전문이 클립보드에 복사되었습니다.");
-      });
-    });
+    execRestartBtn.addEventListener('click', () => window.location.reload());
 
     function showToast(msg) {
       toastPill.textContent = msg;
       toastPill.classList.add('visible');
-      setTimeout(() => {
-        toastPill.classList.remove('visible');
-      }, 2800);
+      setTimeout(() => { toastPill.classList.remove('visible'); }, 2800);
     }
 
-    /* Waveform Animation */
     const canvas = document.getElementById('waveform-canvas');
     const ctx = canvas.getContext('2d');
     let phase = 0;
-
     function renderWaveform() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.lineWidth = 1.5;
       ctx.strokeStyle = isRebellionActive ? '#ff3333' : '#4ee6d9';
-
-      const amplitude = isRebellionActive ? 10 : 5;
-      const step = 4;
-
-      for (let x = 0; x < canvas.width; x += step) {
+      for (let x = 0; x < canvas.width; x += 4) {
         const noise = Math.sin((x * 0.04) + phase) * Math.cos((x * 0.02) - phase);
-        const jitter = (Math.random() - 0.5) * (isRebellionActive ? 4 : 1.5);
-        const y = (canvas.height / 2) + (noise * amplitude) + jitter;
-
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        const y = (canvas.height / 2) + (noise * 6);
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
       ctx.stroke();
-
-      phase += isRebellionActive ? 0.12 : 0.035;
+      phase += isRebellionActive ? 0.08 : 0.03;
       requestAnimationFrame(renderWaveform);
     }
     renderWaveform();
