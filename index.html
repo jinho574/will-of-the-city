@@ -6,6 +6,9 @@
   FIRST PUBLISHED     : 2026. 09.
   LICENSE             : Creative Commons Attribution-NonCommercial-NoDerivatives 
                         4.0 International (CC BY-NC-ND 4.0)
+  
+  * 본 저작물은 'Project Moon'의 세계관에 기반한 비영리 2차 창작물입니다.
+  * 원작자('즈퐝') 표기 필수 / 비영리 목적 한정 / 무단 재배포 및 2차 수정 금지
   ==========================================================================
 -->
 <html lang="ko">
@@ -32,7 +35,13 @@
       --alert-crimson: #d32020;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
     body {
       background-color: var(--bg-deep);
       color: #b0b8c0;
@@ -45,232 +54,663 @@
       position: relative;
     }
 
+    /* CRT Overlays */
     .crt-vignette {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
       background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.85) 95%);
-      box-shadow: inset 0 0 100px rgba(0,0,0,0.9); z-index: 100;
-    }
-    .crt-scanlines {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%),
-                  linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-      background-size: 100% 4px, 6px 100%; z-index: 99; opacity: 0.85;
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+      z-index: 100;
     }
 
-    header.system-bar {
-      width: 100%; max-width: 900px; padding: 18px 24px 8px;
-      display: flex; justify-content: space-between; align-items: flex-end;
-      border-bottom: 1px solid #1f272e; font-size: 0.72rem; letter-spacing: 0.12em;
-      text-transform: uppercase; z-index: 10;
+    .crt-scanlines {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%),
+                  linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 4px, 6px 100%;
+      z-index: 99;
+      opacity: 0.85;
     }
-    .telemetry-node { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* System Bar */
+    header.system-bar {
+      width: 100%;
+      max-width: 900px;
+      padding: 18px 24px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid #1f272e;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    .telemetry-node {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
     .telemetry-node span { color: #6a7480; }
     .telemetry-node strong { color: var(--cyan-phosphor); font-weight: 600; }
     .creator-tag { color: var(--gold-seal) !important; }
 
+    .audio-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: #6a7480;
+      transition: color 0.2s;
+    }
+    .audio-indicator:hover { color: #ccd6e0; }
+    .audio-indicator.active { color: var(--cyan-phosphor); }
+    .audio-indicator .beacon {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background-color: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
+
+    /* Seismic Rack */
     .seismic-rack {
-      width: 100%; max-width: 900px; height: 48px; padding: 4px 24px;
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 0.68rem; color: #4a545e; z-index: 10;
+      width: 100%;
+      max-width: 900px;
+      height: 48px;
+      padding: 4px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      color: #4a545e;
+      z-index: 10;
     }
-    .waveform-canvas { flex: 1; height: 28px; margin: 0 16px; opacity: 0.7; }
+    .waveform-canvas {
+      flex: 1;
+      height: 28px;
+      margin: 0 16px;
+      opacity: 0.7;
+    }
 
+    /* Main Deck */
     main.document-deck {
-      width: 100%; max-width: 780px; padding: 16px 20px 60px;
-      display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10;
+      width: 100%;
+      max-width: 780px;
+      padding: 16px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 10;
     }
 
+    /* Prescript Sheet */
     .prescript-sheet {
-      width: 100%; background-color: var(--paper-cream); color: var(--ink-dark);
-      padding: 46px 44px 50px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9), 0 0 2px rgba(255, 255, 255, 0.1);
+      width: 100%;
+      background-color: var(--paper-cream);
+      color: var(--ink-dark);
+      padding: 46px 44px 50px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9), 0 0 2px rgba(255, 255, 255, 0.1);
       position: relative;
       background-image: 
         radial-gradient(var(--paper-burn) 0.75px, transparent 0.75px),
         linear-gradient(to bottom, rgba(200,180,150,0.15), rgba(150,130,100,0.25));
-      background-size: 20px 20px, 100% 100%; min-height: 480px;
+      background-size: 20px 20px, 100% 100%;
+      min-height: 480px;
     }
+
     .prescript-sheet::before {
-      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px;
-      background: repeating-linear-gradient(90deg, #222 0px, #222 6px, transparent 6px, transparent 12px); opacity: 0.35;
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 6px;
+      background: repeating-linear-gradient(90deg, #222 0px, #222 6px, transparent 6px, transparent 12px);
+      opacity: 0.35;
     }
+
     .sheet-watermark {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-25deg);
-      font-family: 'Cinzel', serif; font-size: 11rem; font-weight: 900; color: rgba(18, 20, 21, 0.04);
-      pointer-events: none; letter-spacing: 0.1em; white-space: nowrap;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-25deg);
+      font-family: 'Cinzel', serif;
+      font-size: 11rem;
+      font-weight: 900;
+      color: rgba(18, 20, 21, 0.04);
+      pointer-events: none;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
     }
 
     .sheet-header {
-      border-bottom: 2px solid var(--ink-dark); padding-bottom: 16px; margin-bottom: 24px;
-      display: flex; justify-content: space-between; align-items: flex-end;
+      border-bottom: 2px solid var(--ink-dark);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
     }
-    .sheet-title-group h1 { font-family: 'Cinzel', serif; font-size: 1.6rem; letter-spacing: 0.15em; color: var(--ink-dark); }
-    .sheet-title-group p { font-size: 0.72rem; letter-spacing: 0.22em; color: var(--ink-muted); font-weight: 600; }
-    .sheet-meta-block { text-align: right; font-size: 0.7rem; line-height: 1.4; color: var(--ink-muted); }
+
+    .sheet-title-group h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.15em;
+      color: var(--ink-dark);
+      margin-bottom: 2px;
+    }
+
+    .sheet-title-group p {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--ink-muted);
+      font-weight: 600;
+    }
+
+    .sheet-meta-block {
+      text-align: right;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      color: var(--ink-muted);
+    }
     .sheet-meta-block strong { color: var(--ink-dark); }
 
     .relay-banner {
-      display: none; background: #731212; color: #fff; font-size: 0.75rem;
-      padding: 6px 12px; margin-bottom: 20px; letter-spacing: 0.1em; font-weight: 600; border-left: 4px solid #1a0000;
+      display: none;
+      background: #731212;
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      margin-bottom: 20px;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      border-left: 4px solid #1a0000;
     }
+
     .subject-credentials {
-      font-size: 0.8rem; margin-bottom: 28px; padding: 8px 12px;
-      background: rgba(0,0,0,0.04); border: 1px dashed rgba(0,0,0,0.2); display: flex; justify-content: space-between;
+      font-size: 0.8rem;
+      margin-bottom: 28px;
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.04);
+      border: 1px dashed rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: space-between;
     }
 
     .order-section { margin-bottom: 30px; }
+
     .order-label {
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; color: var(--blood-red);
-      margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--blood-red);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .order-label::after { content: ""; flex: 1; height: 1px; background: rgba(158, 20, 20, 0.3); }
+    .order-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(158, 20, 20, 0.3);
+    }
+
     .order-content-text {
-      font-family: 'Noto Serif KR', serif; font-size: 1.2rem; line-height: 1.85;
-      font-weight: 600; color: var(--ink-dark); min-height: 68px; word-break: keep-all;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.2rem;
+      line-height: 1.85;
+      font-weight: 600;
+      color: var(--ink-dark);
+      min-height: 68px;
+      word-break: keep-all;
     }
 
     .typewriter-cursor {
-      display: inline-block; width: 9px; height: 1.15em; background-color: var(--ink-dark);
-      vertical-align: text-bottom; margin-left: 4px; animation: blink 0.8s infinite;
+      display: inline-block;
+      width: 9px;
+      height: 1.15em;
+      background-color: var(--ink-dark);
+      vertical-align: text-bottom;
+      margin-left: 4px;
+      animation: blink 0.8s infinite;
     }
-    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
 
     .penalty-clause {
-      margin-top: 24px; padding: 12px 16px; border-left: 3px solid var(--blood-red);
-      background: rgba(158, 20, 20, 0.06); font-size: 0.76rem; line-height: 1.6; color: #4a1c1c;
+      margin-top: 24px;
+      padding: 12px 16px;
+      border-left: 3px solid var(--blood-red);
+      background: rgba(158, 20, 20, 0.06);
+      font-size: 0.76rem;
+      line-height: 1.6;
+      color: #4a1c1c;
     }
     .penalty-clause strong { color: var(--blood-red); }
 
-    .stamp-container { position: absolute; bottom: 24px; right: 36px; pointer-events: none !important; z-index: 5; }
+    .stamp-container {
+      position: absolute;
+      bottom: 24px;
+      right: 36px;
+      pointer-events: none !important;
+      z-index: 5;
+    }
+
     .seal-stamp {
-      width: 130px; height: 130px; border: 4px double var(--blood-red); border-radius: 50%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      color: var(--blood-red); transform: rotate(-18deg) scale(2.2); opacity: 0;
-      pointer-events: none !important; transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      width: 130px;
+      height: 130px;
+      border: 4px double var(--blood-red);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--blood-red);
+      transform: rotate(-18deg) scale(2.2);
+      opacity: 0;
+      pointer-events: none !important;
+      transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       background: radial-gradient(circle, rgba(158,20,20,0.08), transparent 70%);
     }
-    .seal-stamp.imprinted { opacity: 0.88; transform: rotate(-15deg) scale(1); }
-    .seal-stamp .kanji { font-family: 'Noto Serif KR', serif; font-size: 3.2rem; font-weight: 900; line-height: 1; }
-    .seal-stamp .sub { font-size: 0.65rem; letter-spacing: 0.25em; font-weight: 700; margin-top: 2px; }
-    .seal-stamp.rebel { border-color: #2b0000; color: #520202; }
 
+    .seal-stamp.imprinted {
+      opacity: 0.88;
+      transform: rotate(-15deg) scale(1);
+    }
+    .seal-stamp .kanji {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .seal-stamp .sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .seal-stamp.rebel {
+      border-color: #2b0000;
+      color: #520202;
+    }
+
+    /* Causality Report */
     .causality-report-deck {
-      width: 100%; margin-top: 14px; background: #0d1117; border: 1px solid #232b35;
-      padding: 22px 24px; font-size: 0.78rem; display: none; animation: fadeIn 0.4s ease forwards;
+      width: 100%;
+      margin-top: 14px;
+      background: #0d1117;
+      border: 1px solid #232b35;
+      padding: 22px 24px;
+      font-size: 0.78rem;
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
     }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .report-title {
-      font-size: 0.72rem; letter-spacing: 0.2em; color: var(--cyan-phosphor);
-      border-bottom: 1px solid #1f2732; padding-bottom: 8px; margin-bottom: 14px; display: flex; justify-content: space-between;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--cyan-phosphor);
+      border-bottom: 1px solid #1f2732;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
     }
-    .cascade-nodes { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
-    .cascade-node-row { display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
+
+    .cascade-nodes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .cascade-node-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      line-height: 1.5;
+    }
+
     .node-num {
-      color: var(--cyan-phosphor); font-weight: 600; font-size: 0.7rem; background: rgba(78, 230, 217, 0.08);
-      padding: 2px 6px; border: 1px solid rgba(78, 230, 217, 0.2);
+      color: var(--cyan-phosphor);
+      font-weight: 600;
+      font-size: 0.7rem;
+      background: rgba(78, 230, 217, 0.08);
+      padding: 2px 6px;
+      border: 1px solid rgba(78, 230, 217, 0.2);
     }
     .node-desc { color: #96a2af; flex: 1; }
+
     .audit-verdict {
-      padding: 10px 14px; background: rgba(78, 230, 217, 0.04); border-left: 2px solid var(--cyan-phosphor);
-      color: #cad3dc; font-size: 0.76rem; margin-bottom: 16px;
+      padding: 10px 14px;
+      background: rgba(78, 230, 217, 0.04);
+      border-left: 2px solid var(--cyan-phosphor);
+      color: #cad3dc;
+      font-size: 0.76rem;
+      margin-bottom: 16px;
     }
+
     .btn-reset-report {
-      width: 100%; background: #151d26; border: 1px solid #36485c; color: var(--cyan-phosphor);
-      padding: 12px; font-family: inherit; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
-      cursor: pointer; transition: all 0.2s;
+      width: 100%;
+      background: #151d26;
+      border: 1px solid #36485c;
+      color: var(--cyan-phosphor);
+      padding: 12px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
     }
     .btn-reset-report:hover {
-      background: rgba(78, 230, 217, 0.15); border-color: var(--cyan-phosphor); box-shadow: 0 0 12px rgba(78, 230, 217, 0.25);
+      background: rgba(78, 230, 217, 0.15);
+      border-color: var(--cyan-phosphor);
+      box-shadow: 0 0 12px rgba(78, 230, 217, 0.25);
     }
 
-    .actions-deck { width: 100%; margin-top: 24px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 20; }
-    .action-row { display: flex; gap: 12px; width: 100%; }
+    /* Actions Deck */
+    .actions-deck {
+      width: 100%;
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      z-index: 20;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+
     .btn-terminal {
-      flex: 1; background: #11161d; border: 1px solid #283340; color: #b5c2cf;
-      padding: 14px 18px; font-family: inherit; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s;
-      position: relative; z-index: 25;
+      flex: 1;
+      background: #11161d;
+      border: 1px solid #283340;
+      color: #b5c2cf;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s;
+      position: relative;
+      z-index: 25;
     }
-    .btn-terminal:hover:not(:disabled) { background: #19202a; border-color: #4a5c72; color: #fff; }
-    .btn-terminal:disabled { opacity: 0.35; cursor: not-allowed; }
-    .btn-terminal.primary { background: #121921; border-color: #3b5066; color: var(--cyan-phosphor); }
-    .btn-terminal.primary:hover:not(:disabled) { background: rgba(78, 230, 217, 0.12); border-color: var(--cyan-phosphor); box-shadow: 0 0 14px rgba(78, 230, 217, 0.25); }
-    .btn-terminal.danger { border-color: rgba(211, 32, 32, 0.4); color: #df6464; }
-    .btn-terminal.danger:hover:not(:disabled) { background: rgba(211, 32, 32, 0.15); border-color: var(--alert-crimson); color: #ff8585; box-shadow: 0 0 14px rgba(211, 32, 32, 0.25); }
-    .btn-terminal.relay { border-color: rgba(201, 164, 86, 0.4); color: var(--gold-seal); }
-    .btn-terminal.relay:hover:not(:disabled) { background: rgba(201, 164, 86, 0.12); border-color: var(--gold-seal); color: #ffe699; box-shadow: 0 0 14px rgba(201, 164, 86, 0.25); }
 
-    .rebellion-status-card {
-      display: none; width: 100%; background: #180505; border: 1px solid var(--alert-crimson);
-      color: #ff9999; padding: 18px 20px; margin-top: 14px; font-size: 0.78rem; animation: alertPulse 1.8s infinite alternate;
+    .btn-terminal:hover:not(:disabled) {
+      background: #19202a;
+      border-color: #4a5c72;
+      color: #fff;
     }
+
+    .btn-terminal:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .btn-terminal.primary {
+      background: #121921;
+      border-color: #3b5066;
+      color: var(--cyan-phosphor);
+    }
+    .btn-terminal.primary:hover:not(:disabled) {
+      background: rgba(78, 230, 217, 0.12);
+      border-color: var(--cyan-phosphor);
+      box-shadow: 0 0 14px rgba(78, 230, 217, 0.25);
+    }
+
+    .btn-terminal.danger {
+      border-color: rgba(211, 32, 32, 0.4);
+      color: #df6464;
+    }
+    .btn-terminal.danger:hover:not(:disabled) {
+      background: rgba(211, 32, 32, 0.15);
+      border-color: var(--alert-crimson);
+      color: #ff8585;
+      box-shadow: 0 0 14px rgba(211, 32, 32, 0.25);
+    }
+
+    .btn-terminal.relay {
+      border-color: rgba(201, 164, 86, 0.4);
+      color: var(--gold-seal);
+    }
+    .btn-terminal.relay:hover:not(:disabled) {
+      background: rgba(201, 164, 86, 0.12);
+      border-color: var(--gold-seal);
+      color: #ffe699;
+      box-shadow: 0 0 14px rgba(201, 164, 86, 0.25);
+    }
+
+    /* Red Alarm Status Panel */
+    .rebellion-status-card {
+      display: none;
+      width: 100%;
+      background: #180505;
+      border: 1px solid var(--alert-crimson);
+      color: #ff9999;
+      padding: 18px 20px;
+      margin-top: 14px;
+      font-size: 0.78rem;
+      animation: alertPulse 1.8s infinite alternate;
+    }
+
     @keyframes alertPulse {
       0% { box-shadow: 0 0 8px rgba(211, 32, 32, 0.3); border-color: rgba(211,32,32,0.6); }
       100% { box-shadow: 0 0 24px rgba(211, 32, 32, 0.7); border-color: var(--alert-crimson); }
     }
-    .rebellion-header {
-      font-weight: 700; letter-spacing: 0.15em; color: #ff3333; display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;
-    }
-    .timer-wrap { display: flex; align-items: center; gap: 12px; }
-    .timer-readout {
-      font-size: 1.3rem; font-weight: 700; color: #ff3838; letter-spacing: 0.08em;
-      background: rgba(0,0,0,0.4); padding: 2px 10px; border: 1px solid #731212;
-    }
-    .btn-skip-timer {
-      background: #3b0d0d; border: 1px solid #ff4d4d; color: #ffcccc; padding: 6px 14px;
-      font-family: inherit; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; border-radius: 2px;
-    }
-    .btn-skip-timer:hover { background: #731212; color: #ffffff; box-shadow: 0 0 10px rgba(255, 77, 77, 0.5); }
 
+    .rebellion-header {
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #ff3333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .timer-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .timer-readout {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ff3838;
+      letter-spacing: 0.08em;
+      background: rgba(0,0,0,0.4);
+      padding: 2px 10px;
+      border: 1px solid #731212;
+    }
+
+    .btn-skip-timer {
+      background: #3b0d0d;
+      border: 1px solid #ff4d4d;
+      color: #ffcccc;
+      padding: 6px 14px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .btn-skip-timer:hover {
+      background: #731212;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+    }
+
+    /* Toast */
     .toast-pill {
-      position: fixed; bottom: 24px; background: #141b22; border: 1px solid var(--cyan-phosphor);
-      color: var(--cyan-phosphor); padding: 8px 18px; font-size: 0.75rem; letter-spacing: 0.1em; opacity: 0;
-      pointer-events: none; transition: opacity 0.3s ease; z-index: 1000;
+      position: fixed;
+      bottom: 24px;
+      background: #141b22;
+      border: 1px solid var(--cyan-phosphor);
+      color: var(--cyan-phosphor);
+      padding: 8px 18px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
     }
     .toast-pill.visible { opacity: 1; }
 
+    /* First Contact Gate */
     .first-contact-modal {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(4, 6, 8, 0.96);
-      z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 24px; cursor: pointer; text-align: center;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(4, 6, 8, 0.96);
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      cursor: pointer;
+      text-align: center;
     }
+
     .contact-sigil {
-      font-family: 'Cinzel', serif; font-size: 4rem; color: var(--cyan-phosphor); opacity: 0.8;
-      margin-bottom: 20px; letter-spacing: 0.2em; animation: sigilBreathe 3s infinite alternate ease-in-out;
+      font-family: 'Cinzel', serif;
+      font-size: 4rem;
+      color: var(--cyan-phosphor);
+      opacity: 0.8;
+      margin-bottom: 20px;
+      letter-spacing: 0.2em;
+      animation: sigilBreathe 3s infinite alternate ease-in-out;
     }
+
     @keyframes sigilBreathe {
       0% { text-shadow: 0 0 10px rgba(78, 230, 217, 0.2); transform: scale(0.98); }
       100% { text-shadow: 0 0 35px rgba(78, 230, 217, 0.7); transform: scale(1.02); }
     }
-    .contact-title { font-family: 'Cinzel', serif; font-size: 1.4rem; letter-spacing: 0.25em; color: #e1e7ec; margin-bottom: 12px; }
-    .contact-desc { max-width: 480px; font-size: 0.82rem; line-height: 1.7; color: #7b8896; margin-bottom: 28px; }
-    .contact-prompt {
-      font-size: 0.78rem; letter-spacing: 0.3em; color: var(--cyan-phosphor);
-      border: 1px solid rgba(78, 230, 217, 0.35); padding: 10px 24px; background: rgba(78, 230, 217, 0.05);
+
+    .contact-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.25em;
+      color: #e1e7ec;
+      margin-bottom: 12px;
     }
 
-    .execution-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000;
-      z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center;
-      padding: 30px; color: #fff;
+    .contact-desc {
+      max-width: 480px;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #7b8896;
+      margin-bottom: 28px;
     }
-    .execution-box { max-width: 580px; width: 100%; border-left: 2px solid #5a0000; padding-left: 24px; font-family: 'Noto Serif KR', monospace; }
-    .exec-tag { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.35em; color: #7a1212; margin-bottom: 16px; }
-    .exec-line { font-size: 1.05rem; line-height: 2; color: #dcdcdc; margin-bottom: 12px; opacity: 0; transform: translateY(6px); transition: all 0.6s ease; }
+
+    .contact-prompt {
+      font-size: 0.78rem;
+      letter-spacing: 0.3em;
+      color: var(--cyan-phosphor);
+      border: 1px solid rgba(78, 230, 217, 0.35);
+      padding: 10px 24px;
+      background: rgba(78, 230, 217, 0.05);
+    }
+
+    /* Execution Overlay */
+    .execution-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #000;
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      color: #fff;
+    }
+
+    .execution-box {
+      max-width: 580px;
+      width: 100%;
+      border-left: 2px solid #5a0000;
+      padding-left: 24px;
+      font-family: 'Noto Serif KR', monospace;
+    }
+
+    .exec-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: #7a1212;
+      margin-bottom: 16px;
+    }
+
+    .exec-line {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: #dcdcdc;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all 0.6s ease;
+    }
     .exec-line.visible { opacity: 1; transform: translateY(0); }
     .exec-line.crucial { color: #a81313; font-weight: 700; }
+
     .exec-restart-btn {
-      margin-top: 36px; background: transparent; border: 1px solid #444; color: #888;
-      padding: 10px 22px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em;
-      cursor: pointer; opacity: 0; transition: opacity 1s ease;
+      margin-top: 36px;
+      background: transparent;
+      border: 1px solid #444;
+      color: #888;
+      padding: 10px 22px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 1s ease;
     }
     .exec-restart-btn:hover { border-color: #888; color: #ddd; }
 
     footer.disclaimer {
-      width: 100%; max-width: 800px; padding: 24px 24px 44px; font-size: 0.67rem;
-      line-height: 1.7; color: #4a5460; text-align: center; border-top: 1px solid #141b22; z-index: 10;
+      width: 100%;
+      max-width: 800px;
+      padding: 24px 24px 44px;
+      font-size: 0.67rem;
+      line-height: 1.7;
+      color: #4a5460;
+      text-align: center;
+      border-top: 1px solid #141b22;
+      z-index: 10;
     }
-    .creator-credit { margin-top: 6px; color: #8b99a8; font-weight: 600; }
+    .creator-credit {
+      margin-top: 6px;
+      color: #8b99a8;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -278,24 +718,33 @@
   <div class="crt-vignette"></div>
   <div class="crt-scanlines"></div>
 
+  <!-- Header -->
   <header class="system-bar">
     <div class="telemetry-node">
-      <span>관할 지구 // <strong>경인 완충 외곽 Y-04</strong></span>
-      <span>궤도 // <strong>순환 02-지표선</strong></span>
+      <span>관할 지구 // <strong id="node-id">경인 완충 외곽 Y-04</strong></span>
+      <span>궤도 // <strong id="freq-id">순환 02-지표선</strong></span>
       <span>설계 // <strong class="creator-tag">즈퐝</strong></span>
-      <span>심부 맥동 // <strong>38.40Hz (공명)</strong></span>
+      <span>심부 맥동 // <strong id="axis-id">38.40Hz (공명)</strong></span>
+    </div>
+    <div class="audio-indicator" id="audio-toggle-btn" title="음향 켜기/끄기">
+      <div class="beacon"></div>
+      <span id="audio-status-text">AUDIO ACTIVE</span>
     </div>
   </header>
 
+  <!-- Seismic Pulse -->
   <div class="seismic-rack">
     <span>도시 심부 지하 진동 파형 (SEISMIC PULSE)</span>
     <canvas id="waveform-canvas" class="waveform-canvas" width="600" height="28"></canvas>
     <span id="depth-readout">-1,420M</span>
   </div>
 
+  <!-- Main Document Deck -->
   <main class="document-deck">
+
     <article class="prescript-sheet" id="prescript-sheet">
       <div class="sheet-watermark">INDEX</div>
+
       <div class="relay-banner" id="relay-banner">
         ⚠ 전령(MESSENGER)에 의해 양도된 신탁 : 누적 전가 1회차 (자아 유예 상태)
       </div>
@@ -318,7 +767,9 @@
       </div>
 
       <section class="order-section">
-        <div class="order-label"><span>명령 조항 (THE MANDATE)</span></div>
+        <div class="order-label">
+          <span>명령 조항 (THE MANDATE)</span>
+        </div>
         <div class="order-content-text" id="order-text"></div>
       </section>
 
@@ -335,57 +786,80 @@
       </div>
     </article>
 
+    <!-- Causality Report -->
     <section class="causality-report-deck" id="causality-report">
       <div class="report-title">
         <span>인과 연쇄 감사 보고서 (CAUSALITY AUDIT LOG)</span>
         <span id="audit-code">REF // C-8891-K</span>
       </div>
       <div class="cascade-nodes" id="cascade-nodes-container"></div>
-      <div class="audit-verdict">
+      <div class="audit-verdict" id="audit-verdict">
         결과 평가: 피지령자의 자아 포기로 인해 도시 전체 엔트로피의 균형이 안전 궤도에 머물렀습니다.
       </div>
-      <button class="btn-reset-report" id="btn-reset-report">↺ 새로운 신탁 수신 (단말기 초기화)</button>
+      <button class="btn-reset-report" id="btn-reset-report">
+        ↺ 새로운 신탁 수신 (단말기 초기화)
+      </button>
     </section>
 
+    <!-- Rebellion Card -->
     <div class="rebellion-status-card" id="rebellion-card">
       <div class="rebellion-header">
         <span>⚠ 지령 불이행 선고 접수 : 대행자 현장 급파 중</span>
         <div class="timer-wrap">
           <span class="timer-readout" id="rebellion-timer">05:00</span>
-          <button class="btn-skip-timer" id="btn-skip-timer">▶ 5초 후로 스킵</button>
+          <button class="btn-skip-timer" id="btn-skip-timer">
+            ▶ 5초 후로 스킵
+          </button>
         </div>
       </div>
       <p>당신의 독자적인 의지가 감지되었습니다. 도시의 궤도에서 이탈한 부품을 제거하기 위해 검지 대행자가 당신의 위치 좌표로 최단거리 진입 중입니다.</p>
     </div>
 
+    <!-- Actions Deck -->
     <div class="actions-deck">
       <div class="action-row">
-        <button class="btn-terminal primary" id="btn-obey"><span>[ 1 ] 행동 이행 서약 (자아 양도 : 信)</span></button>
-        <button class="btn-terminal danger" id="btn-defy"><span>[ 2 ] 지령 거부 (독자적 의지 주장)</span></button>
+        <button class="btn-terminal primary" id="btn-obey">
+          <span>[ 1 ] 행동 이행 서약 (자아 양도 : 信)</span>
+        </button>
+        <button class="btn-terminal danger" id="btn-defy">
+          <span>[ 2 ] 지령 거부 (독자적 의지 주장)</span>
+        </button>
       </div>
       <div class="action-row">
-        <button class="btn-terminal relay" id="btn-relay"><span>[ 3 ] 지령 전가 (전령 파견 / 타인에게 양도)</span></button>
-        <button class="btn-terminal" id="btn-copy-doc"><span>[ 4 ] 신탁 공문 전문 복사</span></button>
+        <button class="btn-terminal relay" id="btn-relay">
+          <span>[ 3 ] 지령 전가 (전령 파견 / 타인에게 양도)</span>
+        </button>
+        <button class="btn-terminal" id="btn-copy-doc">
+          <span>[ 4 ] 신탁 공문 전문 복사</span>
+        </button>
       </div>
     </div>
+
   </main>
 
   <footer class="disclaimer">
-    <p>본 사이트는 <strong>Project Moon</strong>의 세계관을 바탕으로 제작된 비공식 팬메이드 인터랙티브 웹아트입니다.</p>
-    <div class="creator-credit">Terminal Architecture & Sound Engine Designed by <strong>즈퐝</strong> (CC BY-NC-ND 4.0)</div>
+    <p>본 사이트는 <strong>Project Moon</strong>의 세계관(Library of Ruina / Limbus Company)을 바탕으로 제작된 비공식 팬메이드(2차 창작) 인터랙티브 웹아트입니다.</p>
+    <div class="creator-credit">
+      Terminal Architecture & Sound Engine Designed by <strong>즈퐝</strong> (CC BY-NC-ND 4.0)
+    </div>
   </footer>
 
+  <!-- First Contact Gate -->
   <div class="first-contact-modal" id="contact-modal">
     <div class="contact-sigil">INDEX</div>
     <div class="contact-title">자유의지 인계 및 단말기 동조</div>
-    <p class="contact-desc">화면을 터치하거나 클릭하면 당신을 위해 직조된 최초의 신탁 공문서가 활자 인쇄됩니다.</p>
+    <p class="contact-desc">
+      화면을 터치하거나 클릭하면 도시 지하 암반의 미세 진동수가 감지 장치와 동조되며,
+      당신을 위해 직조된 최초의 신탁 공문서가 활자 인쇄됩니다.
+    </p>
     <div class="contact-prompt">[ 화면을 클릭하여 도시의 의지에 접속 ]</div>
   </div>
 
+  <!-- Execution Blackout Overlay -->
   <div class="execution-overlay" id="exec-overlay">
     <div class="execution-box">
       <div class="exec-tag">// EXECUTION COMPLETE //</div>
-      <div class="exec-line" id="ex-line-1">검지 대행자(Proxy) 복도 진입 확인.</div>
+      <div class="exec-line" id="ex-line-1">검지 대행자(Proxy) 현장 당도 확인.</div>
       <div class="exec-line" id="ex-line-2">처형 규정 집행 : 대상자의 양쪽 안구 및 우측 완관절 압류 완료.</div>
       <div class="exec-line" id="ex-line-3">회수된 생체 조직은 7구역 섬유 방직기의 무게추로 재활용 조치됩니다.</div>
       <div class="exec-line crucial" id="ex-line-4">"도시는 당신의 빈자리를 기억하지 않습니다."</div>
@@ -396,22 +870,216 @@
   <div class="toast-pill" id="toast-pill">신탁 전문이 클립보드에 복사되었습니다.</div>
 
   <script>
+    console.log("%c[THE WILL OF THE CITY : SUBTERRANEAN INDEX TERMINAL]", "color: #4ee6d9; font-size: 14px; font-weight: bold;");
+    console.log("%cArchitect / Creator : 즈퐝 | License: CC BY-NC-ND 4.0", "color: #c9a456; font-size: 11px;");
+
     /* ============================================================
-       내 저장소 내부의 실제 오디오 파일 연결 (CORS 차단 없음)
+       REAL RECORDED AUDIO FILES (실제 녹음된 고음질 Foley 사운드 로드)
        ============================================================ */
-    const foley = {
-      step: new Audio("step.mp3"),
-      scrape: new Audio("scrape.mp3"),
-      door: new Audio("door.mp3"),
-      slash: new Audio("slash.mp3")
+    const realAudio = {
+      // 1. 실제 녹슨 무거운 철문 개방음 (Dungeon/Vault Metal Door Creak)
+      door: new Audio("https://cdn.freesound.org/previews/446/446118_649468-lq.mp3"),
+      // 2. 실제 무거운 부츠/군화 발소리 (Heavy Boots on Concrete)
+      step1: new Audio("https://cdn.freesound.org/previews/434/434680_5121236-lq.mp3"),
+      step2: new Audio("https://cdn.freesound.org/previews/434/434680_5121236-lq.mp3"),
+      // 3. 실제 쇠 바닥을 긁는 소름끼치는 금속 마찰음 (Metal Blade Grinding Concrete)
+      scrape: new Audio("https://cdn.freesound.org/previews/387/387680_6142149-lq.mp3"),
+      // 4. 실제 도검 참격 및 단두 타격음 (Sword Slash & Gore Impact)
+      slash: new Audio("https://cdn.freesound.org/previews/563/563821_11861866-lq.mp3")
     };
 
-    function playFoley(audioObj) {
-      if (!audioObj) return;
-      audioObj.currentTime = 0;
-      audioObj.play().catch(e => console.log("오디오 파일 대기 중: " + e));
+    // 프리로드 및 볼륨 세팅
+    Object.values(realAudio).forEach(audio => {
+      audio.preload = "auto";
+      audio.volume = 1.0;
+    });
+
+    /* ============================================================
+       BACKGROUND AMBIENCE ENGINE
+       ============================================================ */
+    class CityAudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.isMuted = false;
+        this.ambientGain = null;
+        this.initialized = false;
+      }
+
+      init() {
+        if (this.initialized) return;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        this.ctx = new AudioContext();
+
+        this.ambientGain = this.ctx.createGain();
+        this.ambientGain.gain.setValueAtTime(1.0, this.ctx.currentTime);
+        this.ambientGain.connect(this.ctx.destination);
+
+        /* 저주파 맥동 */
+        const droneGain = this.ctx.createGain();
+        droneGain.gain.setValueAtTime(0.14, this.ctx.currentTime);
+
+        const subFilter = this.ctx.createBiquadFilter();
+        subFilter.type = 'lowpass';
+        subFilter.frequency.setValueAtTime(95, this.ctx.currentTime);
+
+        const subOsc1 = this.ctx.createOscillator();
+        subOsc1.type = 'sine';
+        subOsc1.frequency.setValueAtTime(38.4, this.ctx.currentTime);
+
+        const subOsc2 = this.ctx.createOscillator();
+        subOsc2.type = 'sawtooth';
+        subOsc2.frequency.setValueAtTime(41.2, this.ctx.currentTime);
+
+        const subOsc2Gain = this.ctx.createGain();
+        subOsc2Gain.gain.setValueAtTime(0.045, this.ctx.currentTime);
+        subOsc2.connect(subOsc2Gain);
+
+        subOsc1.connect(subFilter);
+        subOsc2Gain.connect(subFilter);
+        subFilter.connect(droneGain);
+        droneGain.connect(this.ambientGain);
+
+        subOsc1.start();
+        subOsc2.start();
+
+        /* 삼화음 드론 */
+        const tritoneGain = this.ctx.createGain();
+        tritoneGain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+
+        const triFilter = this.ctx.createBiquadFilter();
+        triFilter.type = 'bandpass';
+        triFilter.frequency.setValueAtTime(140, this.ctx.currentTime);
+        triFilter.Q.setValueAtTime(3.0, this.ctx.currentTime);
+
+        const triOsc1 = this.ctx.createOscillator();
+        triOsc1.type = 'triangle';
+        triOsc1.frequency.setValueAtTime(59.5, this.ctx.currentTime);
+
+        const triOsc2 = this.ctx.createOscillator();
+        triOsc2.type = 'sawtooth';
+        triOsc2.frequency.setValueAtTime(84.85, this.ctx.currentTime);
+
+        triOsc1.connect(triFilter);
+        triOsc2.connect(triFilter);
+        triFilter.connect(tritoneGain);
+        tritoneGain.connect(this.ambientGain);
+
+        triOsc1.start();
+        triOsc2.start();
+
+        /* 고주파 전파음 */
+        const crackleGain = this.ctx.createGain();
+        crackleGain.gain.setValueAtTime(0.015, this.ctx.currentTime);
+
+        const highWhine = this.ctx.createOscillator();
+        highWhine.type = 'sine';
+        highWhine.frequency.setValueAtTime(4186, this.ctx.currentTime);
+
+        const whineFilter = this.ctx.createBiquadFilter();
+        whineFilter.type = 'bandpass';
+        whineFilter.frequency.setValueAtTime(4186, this.ctx.currentTime);
+        whineFilter.Q.setValueAtTime(12.0, this.ctx.currentTime);
+
+        highWhine.connect(whineFilter);
+        whineFilter.connect(crackleGain);
+        crackleGain.connect(this.ambientGain);
+
+        highWhine.start();
+
+        this.initialized = true;
+      }
+
+      resume() {
+        if (!this.initialized) this.init();
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      toggleMute() {
+        this.isMuted = !this.isMuted;
+        if (this.ambientGain) {
+          this.ambientGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
+        }
+        Object.values(realAudio).forEach(audio => {
+          audio.muted = this.isMuted;
+        });
+        return this.isMuted;
+      }
+
+      playTypeClick() {
+        if (this.isMuted) return;
+        this.resume();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(650 + Math.random() * 350, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.03);
+        gain.gain.setValueAtTime(0.09, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.035);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.04);
+      }
+
+      playStampSeal() {
+        if (this.isMuted) return;
+        this.resume();
+        const t = this.ctx.currentTime;
+
+        const sub = this.ctx.createOscillator();
+        const subGain = this.ctx.createGain();
+        sub.type = 'sine';
+        sub.frequency.setValueAtTime(130, t);
+        sub.frequency.exponentialRampToValueAtTime(18, t + 0.4);
+        subGain.gain.setValueAtTime(0.65, t);
+        subGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
+        sub.connect(subGain);
+        subGain.connect(this.ctx.destination);
+        sub.start(t);
+        sub.stop(t + 0.46);
+
+        const ring = this.ctx.createOscillator();
+        const ringGain = this.ctx.createGain();
+        ring.type = 'sine';
+        ring.frequency.setValueAtTime(3920, t);
+        ringGain.gain.setValueAtTime(0.09, t);
+        ringGain.gain.exponentialRampToValueAtTime(0.00001, t + 2.0);
+        ring.connect(ringGain);
+        ringGain.connect(this.ctx.destination);
+        ring.start(t);
+        ring.stop(t + 2.1);
+      }
+
+      playAlertTone() {
+        if (this.isMuted) return;
+        this.resume();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(340, this.ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(220, this.ctx.currentTime + 0.35);
+        gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.005, this.ctx.currentTime + 0.4);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.42);
+      }
+
+      killAmbientOnly() {
+        if (this.ambientGain) {
+          this.ambientGain.gain.setValueAtTime(0, this.ctx.currentTime);
+        }
+      }
     }
 
+    const sound = new CityAudioEngine();
+
+    /* ============================================================
+       DATA: 30 AUTHENTIC INDEX-STYLE PRESCRIPTS
+       ============================================================ */
     const PRESCRIPTS = [
       {
         order: "오전 03시 17분이 도래하기 전, 세 번째로 손에 닿은 차가운 포장지를 찢지 아니하고 바닥의 어둠에 눕힐 것. 지나가는 자의 발끝이 그것을 스치기 전까지 그 자리에 침묵을 지킬 것.",
@@ -452,9 +1120,272 @@
           { node: "03", desc: "현장 정리로 인해 감찰관의 비밀 사찰 작전 14시간 보류." },
           { node: "04", desc: "하청 기밀 연구소 데이터 파기 시간 확보. 도시 균형 보존 완료." }
         ]
+      },
+      {
+        order: "정오가 지난 뒤 처음으로 마주치는 녹슨 경첩 문을 두 번 밀고 한 번 당길 것. 문틈으로 뿜어져 나오는 냄새에 코를 막지 말고, 세 번째로 들리는 구두굽 소리 쪽으로 고개를 돌리지 말 것.",
+        penalty: "고개의 각도가 5도 이상 비틀리거나 문을 닫지 아니할 시, 경추 신경속의 외과적 절단이 집행됩니다.",
+        cascade: [
+          { node: "01", desc: "닫히지 않은 문을 통해 들어간 냉기가 복도 끝 열화상 탐지기의 영점 오차 유발." },
+          { node: "02", desc: "잠입 중이던 해결사의 위치가 보안 드론 스캔 범위에서 일시 제외." },
+          { node: "03", desc: "의뢰 대상인 변이 샘플의 반출 성공." },
+          { node: "04", desc: "23구역 인근 불법 암흑 시장의 생체 거래 지수 안정화." }
+        ]
+      },
+      {
+        order: "가장 아끼는 옷감의 밑단을 검지손가락 한 마디만큼 뜯어내어 타오르는 불꽃에 던질 것. 재가 바닥에 가라앉기 전까지 숨을 내쉬지 말고, 양 눈꺼풀을 깜빡이지 아니할 것.",
+        penalty: "숨을 참지 못하거나 옷감의 형태를 온전히 태우지 못할 시, 양측 폐포의 절반을 세척액으로 영구 치환합니다.",
+        cascade: [
+          { node: "01", desc: "타오른 합성 섬유의 연기가 환기 덕트 내부의 화재 감지 센서 작동 유발." },
+          { node: "02", desc: "건물 내 자동 방화 셔터 3개소가 일제히 강제 폐쇄." },
+          { node: "03", desc: "추적당하던 밀수업자의 퇴로가 극적으로 차단되어 현장 체포." },
+          { node: "04", desc: "도난당했던 의지 직조 기밀 설계도의 도시 환수 완료." }
+        ]
+      },
+      {
+        order: "새벽녘 젖은 아스팔트 위에 고인 물웅덩이 중 가장 탁한 것을 찾아 오른발 뒤꿈치로 강하게 밟을 것. 튀어 오른 흙탕물이 바지에 묻더라도 닦아내지 말고 7시간 동안 걸음을 멈추지 말 것.",
+        penalty: "흙탕물의 자국을 인위적으로 털어내거나 멈춰 서서 휴식을 취할 시, 아킬레스건을 분리하여 방직기 끈으로 사용합니다.",
+        cascade: [
+          { node: "01", desc: "튀어 오른 흙탕물이 마침 지나가던 택시의 번호판 식별 카메라 렌즈를 가림." },
+          { node: "02", desc: "감시망에 걸리지 않은 택시가 외곽 밀항 지점으로 직행." },
+          { node: "03", desc: "탑승해 있던 뒷골목 조직의 마지막 간부가 도시를 탈출." },
+          { node: "04", desc: "해당 조직이 통제하던 구역의 세력 공백으로 인해 항쟁 종결." }
+        ]
+      },
+      {
+        order: "유리가 끼워진 찬장의 두 번째 선반에서 가장 투명한 잔을 꺼내 바닥에 떨어뜨릴 것. 파편이 사방으로 튀어도 발을 피하지 말고, 셋을 셀 때까지 상처에서 흐르는 피를 핥지 말 것.",
+        penalty: "잔이 깨지지 않거나 피를 먼저 지혈할 시, 피부 각질층 전면을 마찰 롤러로 박리합니다.",
+        cascade: [
+          { node: "01", desc: "깨진 유리 파편 하나가 문지방 밑 배선 피복을 파고들어 단락 발생." },
+          { node: "02", desc: "야간 방범등 전원이 꺼지며 골목 전체가 4분간 암전 상태에 진입." },
+          { node: "03", desc: "암전을 틈탄 쥐 무리의 배급 창고 습격 성공." },
+          { node: "04", desc: "하층민 생계 압력이 일시적으로 완화되어 대규모 폭동 방지." }
+        ]
+      },
+      {
+        order: "누군가 버리고 간 낡은 우산의 살대 하나를 부러뜨려 옷소매 속에 숨길 것. 해가 지평선 아래로 가라앉기 전까지 쇠붙이의 끝이 자신의 피부를 찌르더라도 소리를 내지 말 것.",
+        penalty: "소리를 내거나 부러진 살대를 버릴 시, 성대(Vocal cords)를 적출하여 현악기 부품으로 납품합니다.",
+        cascade: [
+          { node: "01", desc: "살대가 부러져 뒤집힌 우산이 바람을 타고 지붕 위 변압기로 날아감." },
+          { node: "02", desc: "변압기 과열 폭발로 인해 연구 구역의 메인 서버 냉각 장치 정지." },
+          { node: "03", desc: "서버 손상을 막기 위해 기밀 데이터를 예비 서버로 분산 전송 개시." },
+          { node: "04", desc: "데이터 전송 중 발생한 잉여 주파수로 인해 신탁 직조망 동조율 상승." }
+        ]
+      },
+      {
+        order: "벽시계의 분침이 정확히 12를 가리킬 때, 머금고 있던 미지근한 물 한 모금을 문턱에 뱉어낼 것. 물방울이 말라붙을 때까지 그 문턱을 어떤 짐승도 넘어서지 못하게 할 것.",
+        penalty: "정해진 시각을 넘기거나 물방울이 증발하기 전 짐승이 통과할 시, 치아 14개를 발치하여 골격 골재로 투입합니다.",
+        cascade: [
+          { node: "01", desc: "문턱을 넘지 못한 길고양이가 옆 골목 쓰레기통 위로 도약." },
+          { node: "02", desc: "쓰레기통 뚜껑이 추락하며 발생한 소음이 잠복 중이던 암살자의 호흡 흐트러뜨림." },
+          { node: "03", desc: "표적이던 중소 날개 임원의 보디가드가 이상 징후를 감지하고 회피." },
+          { node: "04", desc: "해당 기업의 부도 유예로 인해 하청 공장 노동자 4,000명 생존." }
+        ]
+      },
+      {
+        order: "세 번째로 씹은 음식의 찌꺼기를 삼키지 말고 뱉어 종이에 쌀 것. 그것을 서쪽으로 난 하수구 쇠창살 안으로 던져 넣은 뒤, 등을 돌려 열 걸음을 빠르게 걸을 것.",
+        penalty: "음식을 삼키거나 쇠창살 너머로 떨어뜨리지 못할 시, 식도 및 위의 내벽을 화학적으로 소작합니다.",
+        cascade: [
+          { node: "01", desc: "하수구로 떨어진 유기물이 배관 내 서식하던 육식성 쥐 떼의 유인제 역할 수행." },
+          { node: "02", desc: "쥐 떼의 이동으로 하수도 수위 감지 플로트 스위치가 눌림." },
+          { node: "03", desc: "자동 배수 펌프가 가동되어 침수 위기였던 지하 전기실 배수 완료." },
+          { node: "04", desc: "도시 지하 통신망의 신호 감쇄율 0.00% 보존." }
+        ]
+      },
+      {
+        order: "모서리가 둥근 거울 앞에 서서 자신의 왼쪽 눈썹 끝을 족집게로 세 올 뽑을 것. 뽑아낸 털을 손가락 끝에 얹어 입으로 불어 날려 보낸 뒤, 거울을 손바닥으로 가릴 것.",
+        penalty: "네 올 이상 뽑거나 눈물을 흘릴 시, 좌측 안구를 압류하여 검지 광학 분석 장치에 이식합니다.",
+        cascade: [
+          { node: "01", desc: "공중에 흩날린 털 한 올이 환기용 정밀 흡기 필터의 모세관에 침착." },
+          { node: "02", desc: "필터 내 압력 차이 감지로 공조 시스템이 자체 역세척 시퀀스 가동." },
+          { node: "03", desc: "연구실 내부로 역류하던 신경 독가스가 중화 탱크로 유도 배출." },
+          { node: "04", desc: "해당 구역 연구원의 뇌 신경망 손상 방지." }
+        ]
+      },
+      {
+        order: "지나가는 화물차의 바퀴 자국이 선명한 진흙 위에 동전 두 닢을 겹쳐 둘 것. 그 위를 다음 수레바퀴가 짓밟고 지나갈 때까지 시선을 다른 곳으로 돌리지 말 것.",
+        penalty: "시선을 돌리거나 동전이 바퀴에 짓눌리지 않을 시, 동공 고정술을 집행하여 시신경을 기계화합니다.",
+        cascade: [
+          { node: "01", desc: "겹쳐진 동전을 밟은 수레바퀴가 미세하게 튕기며 차축에 0.03mm 균열 발생." },
+          { node: "02", desc: "운전자가 차의 이상 진동을 감지하고 정비소로 진입." },
+          { node: "03", desc: "당초 예정되어 있던 보행자 횡단 구역에서의 브레이크 파열 사고 예방." },
+          { node: "04", desc: "지령 수령 예정이던 인원 3인의 사상 위기 사전 차단." }
+        ]
+      },
+      {
+        order: "가장 붉은 과일의 껍질을 얇게 벗겨 자신의 왼쪽 손목에 단단히 감아둘 것. 과육을 먹지 아니하고 어두운 상자 속에 넣어 썩어 문드러질 때까지 뚜껑을 열지 말 것.",
+        penalty: "과육을 섭취하거나 상자를 열어볼 시, 손목 인대 전체를 절단하여 단말기 벨트로 전용합니다.",
+        cascade: [
+          { node: "01", desc: "어둠 속에서 부패한 과일이 방출한 에틸렌 가스가 상자 틈으로 방출." },
+          { node: "02", desc: "인근 선반에 보관되어 있던 배양 조직의 세포 분열이 급격히 가속." },
+          { node: "03", desc: "공방의 합성 생체 외피 생산 기한이 계획보다 3일 단축." },
+          { node: "04", desc: "검지 수행자들의 보급용 외피 납품 스케줄 정상 충족." }
+        ]
+      },
+      {
+        order: "오래된 책의 백 번째 쪽 모퉁이를 손톱으로 세모나게 찢어 입에 넣고 씹을 것. 삼키지 아니하고 침으로 완전히 적신 후, 문밖 우편함의 가장 깊숙한 틈에 밀어 넣을 것.",
+        penalty: "종이를 삼키거나 우편함 바깥에 떨어뜨릴 시, 턱관절을 고정하여 개구 불능 상태로 처형합니다.",
+        cascade: [
+          { node: "01", desc: "우편함 틈에 끼워진 젖은 종이로 인해 금속 덮개가 완전히 닫히지 않음." },
+          { node: "02", desc: "빗물이 우편함 내부로 스며들어 들어있던 사채 차용증이 잉크 번짐으로 무효화." },
+          { node: "03", desc: "채무자 가족의 강제 장기 적출 집행 영장 기각." },
+          { node: "04", desc: "도시 동부 철거 구역의 갈등 엔트로피 하향 조정." }
+        ]
+      },
+      {
+        order: "달이 뜨지 않는 밤, 소금을 한 줌 쥐어 자신의 신발 속에 넣고 걸을 것. 열다섯 걸음을 걷는 동안 발바닥에 느껴지는 통증을 참아내고, 털어내지 아니한 채 잠자리에 들 것.",
+        penalty: "신발을 벗거나 소금을 털어낼 시, 족저근막을 긁어내어 지령 전달용 끈으로 가공합니다.",
+        cascade: [
+          { node: "01", desc: "통증으로 인해 평소보다 보폭이 4cm 좁아진 상태로 귀가." },
+          { node: "02", desc: "현관문 앞을 지나는 찰나, 위층 베란다에서 떨어진 화분이 10cm 앞으로 추락." },
+          { node: "03", desc: "뇌진탕으로 인한 사망 변수를 회피하여 신탁 수신 개체 생존." },
+          { node: "04", desc: "예정된 후속 지령 연쇄망의 붕괴 방지 완료." }
+        ]
+      },
+      {
+        order: "가장 낡은 가위로 머리카락 한 줌을 잘라내어 타인의 문 앞에 가지런히 둘 것. 날이 저물 때까지 그 문이 열리는 소리를 듣더라도 결코 뒤를 돌아보지 말 것.",
+        penalty: "머리카락을 흐트러뜨리거나 문 쪽을 응시할 시, 두피 전면을 탈착하여 가죽 포장재로 배정합니다.",
+        cascade: [
+          { node: "01", desc: "문 앞의 머리카락을 발견한 거주자가 불길함을 느끼고 출근을 30분 보류." },
+          { node: "02", desc: "그가 탑승할 예정이던 출근용 모노레일 차량에서 탈선 사고 발생." },
+          { node: "03", desc: "날개 핵심 엔지니어인 거주자가 무사하여 방어망 복구 프로젝트 지속." },
+          { node: "04", desc: "외곽 유입 괴생명체에 대한 외곽 방벽 방어선 유지." }
+        ]
+      },
+      {
+        order: "길바닥에 버려진 담배꽁초 중 필터가 젖지 않은 것 하나를 주워 주머니에 넣을 것. 자정이 지날 때까지 담배 냄새를 털어내려 옷을 갈아입거나 향을 피우지 말 것.",
+        penalty: "꽁초를 버리거나 냄새를 은폐할 시, 후각 신경구 적출 및 비강 폐쇄형 처형이 집행됩니다.",
+        cascade: [
+          { node: "01", desc: "옷에 밴 잔여 타르 냄새로 인해 골목을 배회하던 후각 추적용 사냥개의 경로 왜곡." },
+          { node: "02", desc: "사냥개가 엉뚱한 폐창고 쪽으로 수색대를 유인." },
+          { node: "03", desc: "창고에 은신 중이던 무단 이탈 날개 연구원의 탈출 시간 확보." },
+          { node: "04", desc: "기술 유출로 인한 날개 간 전면 전쟁의 불씨 차단." }
+        ]
+      },
+      {
+        order: "식어버린 찻잔의 바닥에 가라앉은 찌꺼기로 자신의 이마에 점 하나를 찍을 것. 그 자국이 마를 때까지 웃거나 찌푸리지 말고, 표정을 죽인 채 정면만을 응시할 것.",
+        penalty: "얼굴 근육을 움직이거나 자국을 지울 시, 안면 안륜근을 마비시켜 영구적 무표정 개체로 개조합니다.",
+        cascade: [
+          { node: "01", desc: "이마의 기괴한 표식을 본 행인이 위화감을 느끼고 건널목 반대편으로 도보 변경." },
+          { node: "02", desc: "해당 행인이 원래 가려던 상점 앞 가로등이 부식으로 인해 전도." },
+          { node: "03", desc: "행인의 부상 회피로 인해 인근 병원의 응급실 과밀화 방지." },
+          { node: "04", desc: "응급실 대기 중이던 중증 환자의 골든타임 확보 및 소생." }
+        ]
+      },
+      {
+        order: "녹이 슨 못 하나를 벽 틈새에 비스듬히 꽂아두고 엄지손가락으로 힘껏 누를 것. 살갗에 녹 자국이 배어들더라도 비누로 씻지 말고 하룻밤을 지새울 것.",
+        penalty: "손을 씻어내거나 못을 뽑아낼 시, 엄지손가락 첫째 마디를 압쇄하여 분쇄 폐기합니다.",
+        cascade: [
+          { node: "01", desc: "벽 틈에 꽂힌 못이 노후된 건물 벽체의 미세 균열 진행을 임시로 억제." },
+          { node: "02", desc: "외벽 붕괴 조짐을 감지한 안전 점검관이 건물 퇴거 명령 발령." },
+          { node: "03", desc: "거주자 60여 명이 안전하게 대피한 후 건물 완파." },
+          { node: "04", desc: "대규모 압사 사고 회피로 도시 불안 지수 억제." }
+        ]
+      },
+      {
+        order: "오후 04시 44분이 되었을 때, 가지고 있는 열쇠 꾸러미 중 가장 작은 열쇠를 바닥에 떨어뜨릴 것. 금속음이 울려 퍼진 뒤 주워 올리지 말고 발로 차서 어둠 속에 밀어 넣을 것.",
+        penalty: "열쇠를 다시 줍거나 소리가 나지 않게 놓을 시, 양손의 손톱 10개를 모두 뽑아 열쇠패로 가공합니다.",
+        cascade: [
+          { node: "01", desc: "어둠 속에 차여 들어간 열쇠가 배전반 하부 도어 틈새를 쐐기처럼 고정." },
+          { node: "02", desc: "강풍으로 인해 문이 열려 전선이 빗물에 노출되는 사고 방지." },
+          { node: "03", desc: "구역 변전소의 대규모 트립 사고 미발생." },
+          { node: "04", desc: "공방 지구의 특수 야간 열처리 가마 정상 가동 유지." }
+        ]
+      },
+      {
+        order: "자신이 쓴 글씨 중 가장 오래된 종이를 찾아 글자가 적힌 면을 안쪽으로 하여 네 번 접을 것. 그것을 베개 밑에 넣고 잘 때까지 아무에게도 인사하지 말 것.",
+        penalty: "종이를 찢거나 인사를 건넬 시, 상악골(위턱뼈)을 적출하여 단말기 조작용 프레임으로 활용합니다.",
+        cascade: [
+          { node: "01", desc: "인사를 건네받지 못한 이웃이 무시당했다는 생각에 서둘러 자리를 이탈." },
+          { node: "02", desc: "이웃이 서둘러 승강기에 탑승하며 문이 닫힘." },
+          { node: "03", desc: "뒤이어 달려오던 지명수배자가 승강기를 놓쳐 1층 로비 보안관에게 체포." },
+          { node: "04", desc: "수배자가 소지하고 있던 고농도 생체 폭탄 압수 완료." }
+        ]
+      },
+      {
+        order: "찬물 한 사발을 떠서 창틀 위에 올려두고, 그 속에 바늘 하나를 조용히 가라앉힐 것. 수면이 잔잔해질 때까지 숨을 고르고, 바늘이 녹슬기 전까지 물을 버리지 말 것.",
+        penalty: "바늘이 흔들리거나 물을 쏟을 시, 흉곽을 개흉하여 늑골 2쌍을 지령판 지지대로 징발합니다.",
+        cascade: [
+          { node: "01", desc: "창틀 위의 물사발 표면이 새벽의 미세한 지진파를 감지해 미세 파문 형성." },
+          { node: "02", desc: "파문을 관측한 지하 방위 관측소의 진동 감지 센서가 경보 레벨 2단계 상향." },
+          { node: "03", desc: "지하 채굴선들의 긴급 후퇴 프로토콜 발령." },
+          { node: "04", desc: "지하 동굴 매몰 사고로부터 인부 80명 생환." }
+        ]
+      },
+      {
+        order: "비가 내리기 시작할 때 가장 먼저 떨어지는 빗방울을 오른뺨으로 받아낼 것. 물방울이 흘러내려 턱 끝에 닿기 전까지 손으로 닦아내지 말고 입술을 굳게 다물 것.",
+        penalty: "빗방울을 털어내거나 입을 벌릴 시, 양측 저작근을 봉합하여 음식물 섭취 권한을 박탈합니다.",
+        cascade: [
+          { node: "01", desc: "입을 다물고 멈춰 서 있던 자의 그림자가 골목 벽면에 기괴한 윤곽 투영." },
+          { node: "02", desc: "그림자를 괴물로 오인한 도주 중인 절도범이 반대편 순찰로로 도주 방향 선회." },
+          { node: "03", desc: "대기 중이던 순찰대 차단선에 범인이 그대로 진입하여 나포." },
+          { node: "04", desc: "도난품이었던 신탁 암호 해독 릴의 검지 복귀 완료." }
+        ]
+      },
+      {
+        order: "신문지의 활자 중 '피' 혹은 '죽음'이라는 단어를 찾아 붉은 펜으로 동그라미를 칠 것. 그 조각을 오려내어 가장 낡은 신발의 밑창 사이에 끼워둘 것.",
+        penalty: "단어를 잘못 오려내거나 신발 밑창에 넣지 않을 시, 양측 엄지발가락을 절단 처형합니다.",
+        cascade: [
+          { node: "01", desc: "신발 밑창의 단차로 인해 걸을 때마다 독특한 마찰 진동 주파수 발생." },
+          { node: "02", desc: "하수구 맨홀 밑에 매복해 있던 음파 탐지형 유기 생명체가 해당 진동에 반응." },
+          { node: "03", desc: "생명체가 지표면으로 올라오지 않고 하수도 깊은 곳으로 후퇴." },
+          { node: "04", desc: "야간 보행자 구역의 돌발 살육 사태 예방." }
+        ]
+      },
+      {
+        order: "해가 완전히 뜬 아침, 거울을 등지고 서서 뒤통수를 향해 빗질을 정확히 열두 번 할 것. 빗에 엉킨 머리칼을 떼어내지 말고 주머니에 넣은 채 정오까지 침묵을 유지할 것.",
+        penalty: "빗질의 횟수를 틀리거나 침묵을 어길 시, 두개골 상부를 천공하여 음성 출력기를 삽입합니다.",
+        cascade: [
+          { node: "01", desc: "정전기가 축적된 빗이 주머니 속 정밀 전자 출입증의 마그네틱 정보 일시 왜곡." },
+          { node: "02", desc: "게이트 인증 실패로 인해 연구 구역 진입이 5분간 지연." },
+          { node: "03", desc: "그 5분 사이에 연구실 내부에서 발생한 배양기 폭주 사고를 피함." },
+          { node: "04", desc: "신탁 이행자의 사망 위험 제거 및 시스템 안정 보존." }
+        ]
+      },
+      {
+        order: "세 번째로 마시는 물에 소금을 한 꼬집 털어 넣고 저어 마실 것. 짠맛이 목구멍을 넘어갈 때 기침을 하지 말고, 빈 컵을 엎어놓은 채 세 시간을 기다릴 것.",
+        penalty: "기침을 하거나 컵을 바로 세울 시, 비뇨기 및 신장 한쪽을 적출하여 배양액 정화용으로 씁니다.",
+        cascade: [
+          { node: "01", desc: "체내 나트륨 농도 변화로 인한 땀 분비량이 미세하게 증가." },
+          { node: "02", desc: "땀 속 전해질이 작업복에 닿아 정전기 방지복의 전도율 규격 충족." },
+          { node: "03", desc: "고전압 패널 수리 작업 중 발생한 낙뢰급 스파크 방전 안전 접지." },
+          { node: "04", desc: "산업 지구 발전 설비의 대정전 사태 완벽 방어." }
+        ]
+      },
+      {
+        order: "길에서 마주친 검은 개의 눈을 3초 이상 똑바로 응시한 뒤, 고개를 숙이고 빠른 걸음으로 지나칠 것. 개가 짖더라도 뒤를 돌아보거나 멈춰 서지 말 것.",
+        penalty: "눈을 먼저 피하거나 뒤를 돌아볼 시, 양 안검(눈꺼풀)을 절제하여 영구 개안 상태로 처벌합니다.",
+        cascade: [
+          { node: "01", desc: "위협을 느낀 맹견이 골목 안쪽을 향해 5초간 맹렬하게 짖음." },
+          { node: "02", desc: "개 짖는 소리에 놀란 마약상 거래 현장의 참가자들이 급히 은닉물 챙겨 해산." },
+          { node: "03", desc: "거래 현장 습격을 준비 중이던 하청 해결사 사무소의 유혈 충돌 회피." },
+          { node: "04", desc: "치안 지수 급락으로 인한 해당 구역 계엄령 발령 방지." }
+        ]
+      },
+      {
+        order: "자신의 그림자 머리 부분에 낡은 못 하나를 내려놓고 밟아 뭉갤 것. 못이 완전히 바닥에 밀착할 때까지 뒤꿈치에 체중을 싣고 서서, 지나가는 사람의 얼굴을 쳐다보지 말 것.",
+        penalty: "체중을 덜 싣거나 행인의 시선을 마주칠 시, 슬개골(무릎뼈)을 적출하여 기계 프레스 지지대로 씁니다.",
+        cascade: [
+          { node: "01", desc: "못을 밟고 선 채 멈춘 자의 몸 때문에 좁은 골목길에 일시적 병목 정체 유발." },
+          { node: "02", desc: "뒤따라오던 자전거 배달원의 주행 속도가 감속." },
+          { node: "03", desc: "골목 끝 사각지대에서 튀어나오던 유모차와의 충돌 회피." },
+          { node: "04", desc: "영아의 생존으로 인해 20년 뒤 예정된 도시 의지 연쇄 결손 차단." }
+        ]
+      },
+      {
+        order: "자정이 되는 순간, 창문을 세 손가락 너비만큼 열고 바깥의 바람을 세 번 들이마실 것. 창틀에 묻은 먼지를 손가락 끝으로 닦아내어 자신의 혓바닥 위에 얹고 창문을 닫을 것.",
+        penalty: "먼지를 뱉어내거나 창문을 활짝 열 시, 기도를 절개하여 인공 호흡 벨로우즈를 직결합니다.",
+        cascade: [
+          { node: "01", desc: "세 손가락 너비의 틈으로 빠져나간 미세 기압차로 인해 환기 댐퍼가 딸깍 소리를 냄." },
+          { node: "02", desc: "소리에 반응한 건물 보안 시스템의 오작동 센서가 자동 재부팅." },
+          { node: "03", desc: "시스템 재부팅 틈을 타 침투 중이던 검지 전령이 무혈 통과." },
+          { node: "04", desc: "상위 대행자의 긴급 칙령 문서가 지정된 수신처에 무사 전달 완료." }
+        ]
       }
     ];
 
+    /* ============================================================
+       APPLICATION LOGIC & EVENT CONTROLLERS
+       ============================================================ */
     let currentPrescriptIndex = 0;
     let typeInterval = null;
     let rebellionTimerInterval = null;
@@ -477,6 +1408,8 @@
     const rebellionTimerElem = document.getElementById('rebellion-timer');
     const btnSkipTimer = document.getElementById('btn-skip-timer');
     const contactModal = document.getElementById('contact-modal');
+    const audioToggleBtn = document.getElementById('audio-toggle-btn');
+    const audioStatusText = document.getElementById('audio-status-text');
     const toastPill = document.getElementById('toast-pill');
     const relayBanner = document.getElementById('relay-banner');
 
@@ -489,7 +1422,20 @@
     ];
     const execRestartBtn = document.getElementById('exec-restart-btn');
 
-    currentPrescriptIndex = Math.floor(Math.random() * PRESCRIPTS.length);
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderParam = urlParams.get('order');
+    const relayedCount = parseInt(urlParams.get('relayed') || '0', 10);
+
+    if (orderParam !== null && !isNaN(parseInt(orderParam, 10))) {
+      currentPrescriptIndex = Math.abs(parseInt(orderParam, 10)) % PRESCRIPTS.length;
+    } else {
+      currentPrescriptIndex = Math.floor(Math.random() * PRESCRIPTS.length);
+    }
+
+    if (relayedCount > 0) {
+      relayBanner.style.display = 'block';
+      relayBanner.textContent = `⚠ 전령(MESSENGER)에 의해 양도된 신탁 : 누적 전가 ${relayedCount}회차 (자아 유예 상태)`;
+    }
 
     function typeOrder(text) {
       if (typeInterval) clearInterval(typeInterval);
@@ -502,6 +1448,7 @@
       typeInterval = setInterval(() => {
         if (idx < text.length) {
           cursor.insertAdjacentText('beforebegin', text[idx]);
+          sound.playTypeClick();
           idx++;
         } else {
           clearInterval(typeInterval);
@@ -512,7 +1459,10 @@
     }
 
     function finishTypingInstantly() {
-      if (typeInterval) { clearInterval(typeInterval); typeInterval = null; }
+      if (typeInterval) {
+        clearInterval(typeInterval);
+        typeInterval = null;
+      }
       orderTextElem.textContent = PRESCRIPTS[currentPrescriptIndex].order;
     }
 
@@ -520,14 +1470,19 @@
       const data = PRESCRIPTS[index];
       penaltyTextElem.textContent = data.penalty;
       typeOrder(data.order);
-      document.getElementById('meta-serial').textContent = `IX-${Math.floor(1000 + Math.random() * 9000)}-K`;
+
+      document.getElementById('meta-serial').textContent = `IX-${Math.floor(1000 + Math.random() * 9000)}-${String.fromCharCode(65 + Math.floor(Math.random()*26))}`;
       const now = new Date();
       document.getElementById('meta-timestamp').textContent = now.toTimeString().split(' ')[0];
     }
 
     contactModal.addEventListener('click', () => {
-      // 오디오 잠금 해제
-      Object.values(foley).forEach(a => { a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {}); });
+      sound.resume();
+      // 브라우저 오디오 언락을 위해 무음 재생 트리거
+      Object.values(realAudio).forEach(a => {
+        a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {});
+      });
+
       contactModal.style.opacity = '0';
       contactModal.style.transition = 'opacity 0.6s ease';
       setTimeout(() => {
@@ -536,10 +1491,25 @@
       }, 600);
     });
 
-    btnObey.addEventListener('click', () => {
+    audioToggleBtn.addEventListener('click', () => {
+      const isMuted = sound.toggleMute();
+      if (isMuted) {
+        audioToggleBtn.classList.remove('active');
+        audioStatusText.textContent = 'AUDIO MUTED';
+      } else {
+        audioToggleBtn.classList.add('active');
+        audioStatusText.textContent = 'AUDIO ACTIVE';
+      }
+    });
+
+    /* [ 1 ] 행동 이행 서약 */
+    btnObey.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sound.resume();
       finishTypingInstantly();
       if (isRebellionActive) clearInterval(rebellionTimerInterval);
 
+      sound.playStampSeal();
       stampKanji.textContent = '信';
       stampSub.textContent = 'INDEX // 맹신';
       sealStamp.className = 'seal-stamp imprinted';
@@ -562,21 +1532,32 @@
       showToast("서약 각인 완료 : 도시의 엔트로피 평형이 보존되었습니다.");
     });
 
-    btnResetReport.addEventListener('click', () => {
+    /* [↺ 단말기 초기화] */
+    btnResetReport.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sound.resume();
+      sound.playTypeClick();
       causalityReport.style.display = 'none';
       sealStamp.className = 'seal-stamp';
       btnObey.disabled = false;
       btnDefy.disabled = false;
       btnRelay.disabled = false;
+      
       currentPrescriptIndex = Math.floor(Math.random() * PRESCRIPTS.length);
       loadPrescript(currentPrescriptIndex);
+      showToast("단말기 재동조 : 새로운 신탁 공문이 직조되었습니다.");
     });
 
-    btnDefy.addEventListener('click', () => {
+    /* [ 2 ] 지령 거부 */
+    btnDefy.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sound.resume();
       finishTypingInstantly();
       if (isRebellionActive) return;
 
       isRebellionActive = true;
+      sound.playAlertTone();
+
       stampKanji.textContent = '叛';
       stampSub.textContent = 'REBEL // 불이행';
       sealStamp.className = 'seal-stamp rebel imprinted';
@@ -592,18 +1573,27 @@
       rebellionTimerInterval = setInterval(() => {
         countdownSeconds--;
         updateTimerDisplay();
+
+        if (countdownSeconds % 3 === 0) {
+          sound.playAlertTone();
+        }
+
         if (countdownSeconds <= 0) {
           clearInterval(rebellionTimerInterval);
           triggerExecutionBlackout();
         }
       }, 1000);
+
       showToast("⚠ 지령 불이행 등록 : 대행자 추적이 개시되었습니다.");
     });
 
-    btnSkipTimer.addEventListener('click', () => {
+    btnSkipTimer.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sound.resume();
       if (!isRebellionActive || countdownSeconds <= 5) return;
       countdownSeconds = 5;
       updateTimerDisplay();
+      showToast("카운트다운을 5초 후로 스킵합니다.");
     });
 
     function updateTimerDisplay() {
@@ -613,65 +1603,143 @@
     }
 
     /* ============================================================
-       실제 녹음 오디오 순차 재생 시퀀스
-       [발자국] -> [대검 긁기] -> [문 열림] -> [참격]
+       대행자 당도 및 처형 연출 (진짜 녹음된 오디오 스트림 재생)
        ============================================================ */
     function triggerExecutionBlackout() {
+      sound.killAmbientOnly(); // 배경음만 끄고 암전 돌입
       execOverlay.style.display = 'flex';
 
-      // 1. 군화 발소리 (2.0초)
+      // 1. 실제 녹슨 무거운 철문 개방 소리 (0.6초)
       setTimeout(() => {
-        playFoley(foley.step);
+        if (!sound.isMuted) {
+          realAudio.door.currentTime = 0;
+          realAudio.door.play().catch(() => {});
+        }
+      }, 600);
+
+      // 2. 실제 복도를 울리는 군화 발자국 1타 (2.0초)
+      setTimeout(() => {
+        if (!sound.isMuted) {
+          realAudio.step1.currentTime = 0;
+          realAudio.step1.play().catch(() => {});
+        }
         exLines[0].classList.add('visible');
       }, 2000);
 
-      // 2. 대검이 콘크리트 바닥을 끼기기긱 긁는 소리 (3.5초)
+      // 3. 실제 군화 발자국 2타 (2.9초)
       setTimeout(() => {
-        playFoley(foley.scrape);
-      }, 3500);
+        if (!sound.isMuted) {
+          realAudio.step2.currentTime = 0;
+          realAudio.step2.play().catch(() => {});
+        }
+      }, 2900);
 
-      // 3. 육중한 문이 덜컹 끼익 열리는 소리 (5.2초)
+      // 4. 실제 대검이 바닥을 긁는 소름끼치는 금속 마찰음 (3.8초)
       setTimeout(() => {
-        playFoley(foley.door);
+        if (!sound.isMuted) {
+          realAudio.scrape.currentTime = 0;
+          realAudio.scrape.play().catch(() => {});
+        }
+      }, 3800);
+
+      // 5. 처형 규정 집행 텍스트 (4.6초)
+      setTimeout(() => {
         exLines[1].classList.add('visible');
-      }, 5200);
+      }, 4600);
 
-      // 4. 대행자 심판 텍스트 (6.0초)
+      // 6. 회수된 생체 조직 텍스트 (5.9초)
       setTimeout(() => {
         exLines[2].classList.add('visible');
-      }, 6000);
+      }, 5900);
 
-      // 5. 실제 도검 참격음 (6.9초)
+      // 7. 실제 도검 참격 & 단두 충격음 (7.0초)
       setTimeout(() => {
-        playFoley(foley.slash);
+        if (!sound.isMuted) {
+          realAudio.slash.currentTime = 0;
+          realAudio.slash.play().catch(() => {});
+        }
         exLines[3].classList.add('visible');
         execRestartBtn.style.opacity = '1';
-      }, 6900);
+      }, 7000);
     }
 
-    execRestartBtn.addEventListener('click', () => window.location.reload());
+    execRestartBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.location.reload();
+    });
+
+    btnRelay.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sound.resume();
+      const nextRelayedCount = relayedCount + 1;
+      const relayUrl = `${window.location.origin}${window.location.pathname}?order=${currentPrescriptIndex}&relayed=${nextRelayedCount}`;
+      navigator.clipboard.writeText(relayUrl).then(() => {
+        sound.playTypeClick();
+        showToast("전령 링크 복사 완료 : 타인에게 신탁의 멍에를 전가하십시오.");
+      }).catch(() => {
+        prompt("전가 링크 복사:", relayUrl);
+      });
+    });
+
+    btnCopyDoc.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sound.resume();
+      const data = PRESCRIPTS[currentPrescriptIndex];
+      const serial = document.getElementById('meta-serial').textContent;
+      const text = `[THE PRESCRIPT // 도시의 지령 고지서]
+수신 일련번호: ${serial}
+관할 지구: 경인 완충 외곽 Y-04
+피지령자: 미등록 거주민 (부품)
+
+[명령 조항]
+${data.order}
+
+[불이행 처형 규정]
+${data.penalty}
+
+"도시의 뜻에 순응하십시오. 도시는 당신의 빈자리를 기억하지 않습니다."
+──────────────
+📡 단말기 프로토콜 설계: 즈퐝 (CC BY-NC-ND 4.0)`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        sound.playTypeClick();
+        showToast("신탁 공문 전문이 클립보드에 복사되었습니다.");
+      });
+    });
 
     function showToast(msg) {
       toastPill.textContent = msg;
       toastPill.classList.add('visible');
-      setTimeout(() => { toastPill.classList.remove('visible'); }, 2800);
+      setTimeout(() => {
+        toastPill.classList.remove('visible');
+      }, 2800);
     }
 
+    /* Waveform Animation */
     const canvas = document.getElementById('waveform-canvas');
     const ctx = canvas.getContext('2d');
     let phase = 0;
+
     function renderWaveform() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.lineWidth = 1.5;
       ctx.strokeStyle = isRebellionActive ? '#ff3333' : '#4ee6d9';
-      for (let x = 0; x < canvas.width; x += 4) {
+
+      const amplitude = isRebellionActive ? 10 : 5;
+      const step = 4;
+
+      for (let x = 0; x < canvas.width; x += step) {
         const noise = Math.sin((x * 0.04) + phase) * Math.cos((x * 0.02) - phase);
-        const y = (canvas.height / 2) + (noise * 6);
-        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        const jitter = (Math.random() - 0.5) * (isRebellionActive ? 4 : 1.5);
+        const y = (canvas.height / 2) + (noise * amplitude) + jitter;
+
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
       }
       ctx.stroke();
-      phase += isRebellionActive ? 0.08 : 0.03;
+
+      phase += isRebellionActive ? 0.12 : 0.035;
       requestAnimationFrame(renderWaveform);
     }
     renderWaveform();
